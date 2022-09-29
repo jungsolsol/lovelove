@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<head>
+    <meta charset="utf-8">
+    <h1>LoveLove</h1>
+    <h2 th:text="|${member}님 주위의 이성|"></h2>
+
+</head>
+<body>
+<div id="map" style="width:800px;height:600px;">
+    <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script th:inline="javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e555062ab88e1ebe1463187ab4a9bcb9&libraries=services,cluster"></script>
+<script th:inline="javascript">
+
+    navigator.geolocation.watchPosition(function (position) {
+
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var locPosition = new kakao.maps.LatLng(lat, lon);
+
+
+        var mapOption = {
+
+            center: locPosition, // 지도의 중심좌표
+            level: 5, // 지도의 확대 레벨
+            mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
+        };
+        // 지도를 생성한다
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        var imageSrc = "/images/heart.svg"
+        var imageSize = new kakao.maps.Size(24, 35);
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: locPosition,
+            image : markerImage,
+        });
+
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                console.log(result);
+                getJson();
+
+            }
+        };
+        geocoder.coord2RegionCode(lon, lat, callback);
+        let jsonData = {
+            'lat': lat,
+            'lon': lon,
+        };
+        function getJson() {
+            $.ajax({
+                type: "post",
+                url: "/love/main",
+                // headers : {'Authorization':'KakaoAK {e555062ab88e1ebe1463187ab4a9bcb9}'},
+                data: jsonData,
+                success : function(jsonData){
+                    //호출 성공하면 작성할 내용
+                    if (jsonData.lat != 0) { // 값이 있으면
+                        console.log(jsonData.lat, jsonData.lon);
+                    }
+                    },
+                    error:function(request,status,error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                }).done(function(data){});
+        }
+
+        });
+
+    var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+</script>
+</div>
+</body>
+</html>
+
+

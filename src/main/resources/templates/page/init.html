@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/56461ea292.js" crossorigin="anonymous"></script>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<nav class="navBar">
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>LoveLove</h1>
+        <p class="lead"></p>
+    </div>
+    <a th:text="|Logged in as ${member}|"></a>
+    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+</div> <!-- /container -->
+    <div>
+    <a th:if="${not #strings.isEmpty(member)}" href="/member/profile", class="btn active" role="button">프로필작성</a>
+    </div>
+    <div>
+    <a th:class="toggleBtn"><i class="fa-solid fa-bars"></i></a>
+    </div>
+</nav>
+</body>
+<footer>
+    <div th:replace="fragments/footer :: footer" />
+</footer>
+
+
+</html>
