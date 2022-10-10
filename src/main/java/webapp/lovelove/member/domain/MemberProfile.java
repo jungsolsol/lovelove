@@ -5,6 +5,8 @@ import webapp.lovelove.member.domain.memberprofiledomain.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,6 +36,14 @@ public class MemberProfile  {
 
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
+
+    public void setImagesUrl(List<Images> imagesUrl) {
+        this.imagesUrl = imagesUrl;
+    }
+
+    @OneToMany(mappedBy = "member")
+    private List<Images> imagesUrl = new ArrayList<>();
+
 
     @Builder
     public MemberProfile(Sex sex, int age, String nickname, int height, String job, Education education

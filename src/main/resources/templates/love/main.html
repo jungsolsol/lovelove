@@ -49,11 +49,15 @@
         var callback = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
                 console.log(result);
+                console.log(location);
                 getJson();
-
+                return geocoder[0].code;
             }
+            else (console.log(result, status))
         };
+
         geocoder.coord2RegionCode(lon, lat, callback);
+
         let jsonData = {
             'lat': lat,
             'lon': lon,

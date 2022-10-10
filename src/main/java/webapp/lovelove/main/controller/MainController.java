@@ -22,15 +22,17 @@ public class MainController {
     private final MemberService memberService;
 
     @GetMapping("/love/main")
-    public void main(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, MemberCreateDto form
-    ) {
+    public void main(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 //        memberService.join(form, principalDetails);
+//        memberService.join();
         model.addAttribute("member", principalDetails.getAttribute("name"));
     }
 
     @PostMapping("/love/main")
     public void main_AddingLocation(@RequestParam("lat") String lat, @RequestParam("lon") String lon,@AuthenticationPrincipal PrincipalDetails principalDetails){
         memberService.setMemberPosition(lat,lon,principalDetails);
+        System.out.println(lat);
+        System.out.println(lon);
 
     }
 }

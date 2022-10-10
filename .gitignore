@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 application-oauth.yml
 
+images/**
 ### STS ###
 .apt_generated
 .classpath

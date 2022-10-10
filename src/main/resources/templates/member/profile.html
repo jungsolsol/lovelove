@@ -7,85 +7,153 @@
 </style>
 <head>
     <h1>LoveLove</h1>
+    <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
 <h2 th:text="|${member}님 프로필 작성|"></h2>
 <div class="container">
-    <form th:action="@{/member/profile}" th:object="${form}" method="post">
+    <form id="updateForm" th:action="@{/member/profile}" th:object="${form}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label th:for="nickname">닉네임</label>
+            <input id="nickname" type="text" th:field="*{nickname}" class="form-control" placeholder="닉네임을입력하세요">
+        </div>
         <div class="form-group">
             <label th:for="sex">성별</label>
-            <select th:name="form">
+            <select th:name="form" th:field="*{sex}" >
                 <option th:each="sex :${T(webapp.lovelove.member.domain.memberprofiledomain.Sex).values()}"
-                        th:value="${sex.name()}" th:text="${sex.name()}"></option>
+                        th:value="${sex}"
+                        th:text="${sex}"></option>
             </select>
         </div>
         <div class="form-group">
-            <label th:for="nickname">닉네임</label>
-            <input type="text" th:field="*{nickname}" class="form-control"
-            placeholder="닉네임을입력하세요"
-            th:class="${#fields.hasErrors('nickname')}? 'form-controlfieldError' : 'form-control'">
-            <p th:if="${#fields.hasErrors('nickname')}"
-               th:errors="*{nickname}">Incorrect date</p>
-        </div>
-<!--        <div class="form-group">-->
-<!--            <label th:for="email">이메일</label>-->
-<!--            <input type="text" th:field="*{email}" class="form-control"-->
-<!--                   placeholder="이메일을입력하세요">-->
-<!--        </div>-->
-        <div class="form-group">
             <label th:for="age">나이</label>
-            <input type="text" th:field="*{age}" class="form-control"
-                   placeholder="나이를입력하세요">
+            <input type="text" id="age" th:field="*{age}" class="form-control" placeholder="나이를입력하세요">
         </div>
         <div class="form-group">
             <label th:for="height">키</label>
             <input type="text" th:field="*{height}" class="form-control"
-                   placeholder="키를입력하세요">
+                   placeholder="키를입력하세요" id="height">
         </div>
         <div class="form-group">
             <label th:for="job">직업</label>
             <input type="text" th:field="*{job}" class="form-control"
-                   placeholder="직업을입력하세요">
+                   th:placeholder="직업을입력하세요" id="job">
         </div>
         <div class="form-group">
             <label th:for="education">학력</label>
-            <select th:name="form">
+            <select th:name="form" th:field="*{education}" >
                 <option th:each="education :${T(webapp.lovelove.member.domain.memberprofiledomain.Education).values()}"
-                        th:value="${education.name()}" th:text="${education.name()}"></option>
+                        th:value="${education}"
+                        th:text="${education}"></option>
             </select>
         </div>
         <div class="form-group">
             <label th:for="religion">종교</label>
-            <select th:name="form">
+            <select th:name="form" th:field="*{religion}" >
                 <option th:each="religion :${T(webapp.lovelove.member.domain.memberprofiledomain.Religion).values()}"
-                        th:value="${religion.name()}" th:text="${religion.name()}"></option>
+                        th:value="${religion}"
+                        th:text="${religion}"></option>
             </select>
         </div>
-
         <div class="form-group">
             <label th:for="have_smoking">흡연</label>
-            <select th:name="form">
+            <select th:name="form" th:field="*{have_smoking}" >
                 <option th:each="have_smoking :${T(webapp.lovelove.member.domain.memberprofiledomain.have_Smoking).values()}"
-                        th:value="${have_smoking.name()}" th:text="${have_smoking.name()}"></option>
+                        th:value="${have_smoking}"
+                        th:text="${have_smoking}"></option>
             </select>
         </div>
-
         <div class="form-group">
             <label th:for="alcohol">음주</label>
-            <select th:name="form">
+            <select th:name="form" th:field="*{alcohol}" >
                 <option th:each="alcohol :${T(webapp.lovelove.member.domain.memberprofiledomain.Alcohol).values()}"
-                        th:value="${alcohol.name()}" th:text="${alcohol.name()}"></option>
+                        th:value="${alcohol}"
+                        th:text="${alcohol}"></option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">제출</button>
-<!--        <a href="/love/main" class="Button">제출</a>-->
-
         <div class="form-group">
             <label th:for="introduce">간단메세지</label>
-            <input type="text" th:field="*{introduce}" class="form-control"
+            <input id="introduce" type="text" th:field="*{introduce}" class="form-control"
                    placeholder="간단히자신을소개해보세요">
+        </div>
+        <div>
+<!--    <form id="fileForm" method="post" enctype="multipart/form-data">-->
+        <h3>사진 첨부</h3>
+        <input type="file" name="file" multiple="true"/>
+        <button type="submit" id="Button">확인</button>
+        <script type="text/javascript">
+            /*<![CDATA[*/
+            $('#Button').submit(function (event) {
+                // var jsonData = {
+                //     sex: $("#sex option:selected").val(),
+                //     age: $('#age').val(),
+                //     height: $('#height').val(),
+                //     job: $('#job').val(),
+                //     religion: $("#religion option:selected").val(),
+                //     nickname: $('#nickname').val(),
+                //     education: $("#education option:selected").val(),
+                //     have_smoking: $("#have_smoking option:selected").val(),
+                //     alcohol: $("#alcohol option:selected").val(),
+                //     introduce: $('#introduce').val(),
+                // };
+                var sex = {sex: $("#sex option:selected").val()}
+                var religion = {religion: $("#religion option:selected").val()}
+                var education = {education: $("#education option:selected").val()}
+                var have_smoking = {have_smoking: $("#have_smoking option:selected").val()}
+                var alcohol = {alcohol: $("#alcohol option:selected").val()}
+                var introduce = {introduce: $('#introduce').val()}
+                var nickname = {nickname: $('#nickname').val()}
+                var job = {job: $('#job').val()}
+                var height = {height: $('#height').val()}
+                var age = {age: $('#age').val()}
+                // var data = $('updateForm')[0];
+                // const blob = new Blob([JSON.stringify(jsonData)], {type: "application/json"});
+
+                const formData = new FormData();
+                var file = $('#file')[0].files[0];
+                // formData.append("key", new Blob([JSON.stringify(jsonData)], {type: "application/json"}));
+                formData.append("age", new Blob([JSON.stringify(age)], {type: "application/json"}));
+                formData.append("sex", new Blob([JSON.stringify(sex)], {type: "application/json"}));
+                formData.append("height", new Blob([JSON.stringify(height)], {type: "application/json"}));
+                formData.append("job", new Blob([JSON.stringify(job)], {type: "application/json"}));
+                formData.append("nickname", new Blob([JSON.stringify(nickname)], {type: "application/json"}));
+                formData.append("introduce", new Blob([JSON.stringify(introduce)], {type: "application/json"}));
+                formData.append("alcohol", new Blob([JSON.stringify(alcohol)], {type: "application/json"}));
+                formData.append("have_smoking", new Blob([JSON.stringify(have_smoking)], {type: "application/json"}));
+                formData.append("education", new Blob([JSON.stringify(education)], {type: "application/json"}));
+                formData.append("religion", new Blob([JSON.stringify(religion)], {type: "application/json"}));
+                formData.append("file", file);
+                // formData.append('key', new Blob([JSON.stringify(jsonData)], {type: "application/json"}));
+                $.ajax({
+                    type: "post",
+                    enctype: "multipart/form-data",	// 필수
+                    url: "/member/profile",
+                    data: formData,
+                    // headers: {'Content-Type': "multipart/form-data"},
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    dataType: "json",
+                    success: function () {
+                        console.log("success: ", formData)
+                    },
+                    error: function (e) {
+                        console.log(e);
+                        for (var key of formData.keys()) {
+
+                            console.log(key);
+                        }
+                        for (var value of formData.values()) {
+                            console.log(value);
+                        }
+                    }
+                });
+            });
+            /*]]>*/
+        </script>
         </div>
     </form>
 </div>
 
 </body>
+</html>

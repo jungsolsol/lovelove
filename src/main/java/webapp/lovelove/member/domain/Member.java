@@ -45,6 +45,7 @@ public class Member {
     @Embedded
     private MemberPosition memberPosition;
 
+
     @Builder
     public Member(String name, String email,String role,String provider, String providerId, MemberProfile memberProfile) {
         this.name = name;
