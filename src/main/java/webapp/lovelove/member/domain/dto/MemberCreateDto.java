@@ -13,6 +13,7 @@ import webapp.lovelove.member.domain.memberprofiledomain.*;
 @Data
 public class MemberCreateDto {
 
+
     private Sex sex;
     private int age;
     private String nickname;

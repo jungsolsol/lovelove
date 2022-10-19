@@ -13,14 +13,15 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class MemberPosition {
 
-    private String lat;
-    private String lon;
+    private Double lat;
+    private Double lon;
 
     @Builder
-    public MemberPosition(String lat, String lon) {
+    public MemberPosition(Double lat, Double lon) {
         this.lat = lat;
         this.lon = lon;
     }
+
 
 
 }

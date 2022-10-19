@@ -37,12 +37,12 @@ public class MemberProfile  {
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
 
-    public void setImagesUrl(List<Images> imagesUrl) {
-        this.imagesUrl = imagesUrl;
+    public void setImagesUrl(List<Images> images) {
+        this.images = images;
     }
 
-    @OneToMany(mappedBy = "member")
-    private List<Images> imagesUrl = new ArrayList<>();
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    private List<Images> images = new ArrayList<>();
 
 
     @Builder

@@ -3,6 +3,7 @@ package webapp.lovelove.member.service;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
+import webapp.lovelove.member.domain.Member;
 import webapp.lovelove.member.domain.memberprofiledomain.Images;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Component
 public class FileHandler {
-    public List<Images> parseFileInfo(Long memberId, List<MultipartFile> files) throws Exception {
+    public List<Images> parseFileInfo(Member member, List<MultipartFile> files) throws Exception {
         List<Images> fileList = new ArrayList<>();
 
 
@@ -62,7 +63,7 @@ public class FileHandler {
                 String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
 
 
-                Images images = Images.builder().id(memberId).imgName(multipartFile.getOriginalFilename())
+                Images images = Images.builder().member(member).imgName(multipartFile.getOriginalFilename())
                         .imgUrl(path +File.separator + new_file_name).file_size(multipartFile.getSize()).build();
 
                 fileList.add(images);

@@ -18,10 +18,10 @@ public class Images {
 
     @Id
     @GeneratedValue
-    @Column(name = "imanges_id")
+    @Column(name = "images_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "member_Id")
     private Member member;
     private String imgName;
@@ -42,4 +42,9 @@ public class Images {
         this.imgName = imgName;
         this.oriImgName = oriImgName;
     }
+
+    public void setImageId(Long id) {
+        this.id = id;
+    }
+
 }

@@ -15,7 +15,7 @@
 <div id="map" style="width:800px;height:600px;">
     <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script th:inline="javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e555062ab88e1ebe1463187ab4a9bcb9&libraries=services,cluster"></script>
-<script th:inline="javascript">
+    <script th:inline="javascript">
 
     navigator.geolocation.watchPosition(function (position) {
 
@@ -44,6 +44,8 @@
             image : markerImage,
         });
 
+        // 주변 이성 DB 탐색
+
         var geocoder = new kakao.maps.services.Geocoder();
 
         var callback = function(result, status) {
@@ -52,8 +54,10 @@
                 console.log(location);
                 getJson();
                 return geocoder[0].code;
+
             }
             else (console.log(result, status))
+
         };
 
         geocoder.coord2RegionCode(lon, lat, callback);

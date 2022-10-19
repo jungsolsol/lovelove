@@ -121,7 +121,8 @@ public class InitController {
                                @RequestParam(value = "nickname") String nickname,
                                @RequestParam(value = "job") String job,
                                @RequestParam(value = "education") Education education,
-                               @RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
+                               @RequestPart(value = "file", required = false) List<MultipartFile> files
+    ) throws IOException {
 
         MemberCreateDto memberCreateDto = new MemberCreateDto();
         memberCreateDto.setAge(age);

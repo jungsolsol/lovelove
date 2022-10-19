@@ -1,6 +1,9 @@
 package webapp.lovelove.member.repository;
 
+import org.springframework.data.geo.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import webapp.lovelove.member.domain.Member;
@@ -14,9 +17,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>, CustomMem
     Member findByEmail(String email);
 
     boolean existsByMemberProfile_Nickname(String nickname);
-
-
-
 
 
 }

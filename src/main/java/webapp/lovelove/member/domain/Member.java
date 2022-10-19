@@ -3,6 +3,11 @@ package webapp.lovelove.member.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.springframework.beans.factory.annotation.Autowired;
 import webapp.lovelove.auth.PrincipalDetails;
 import webapp.lovelove.member.domain.dto.MemberCreateDto;
 
@@ -45,6 +50,9 @@ public class Member {
     @Embedded
     private MemberPosition memberPosition;
 
+    @Column(name = "member_point")
+    private Point point;
+
 
     @Builder
     public Member(String name, String email,String role,String provider, String providerId, MemberProfile memberProfile) {
@@ -61,6 +69,22 @@ public class Member {
     public Member(MemberProfile memberProfile) {
         this.memberProfile = memberProfile;
     }
+
+    public Member(String email, MemberPosition memberPosition,String name, MemberProfile memberProfile) {
+        this.email = email;
+        this.memberPosition = memberPosition;
+        this.name = name;
+        this.memberProfile = memberProfile;
+    }
+
+    public Member(String email, MemberPosition memberPosition, String name, MemberProfile memberProfile, Point point) {
+        this.email = email;
+        this.memberPosition = memberPosition;
+        this.name = name;
+        this.memberProfile = memberProfile;
+        this.point = point;
+    }
+
     public void updateProfile(MemberProfile memberProfile) {
         this.memberProfile = memberProfile;
     }
@@ -68,6 +92,11 @@ public class Member {
     public void updatePosition(MemberPosition memberPosition) {
         this.memberPosition = memberPosition;
     }
+
+    public void updatePoint(Point point) {
+        this.point = point;
+    }
+
 
 
 
