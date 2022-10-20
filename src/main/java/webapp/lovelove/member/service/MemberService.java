@@ -132,7 +132,7 @@ public class MemberService {
     }
 
 
-    public List<findMemberDto> findWomanOrManByPosition(Double lat, Double lon, Double distance) {
+    public List<findMemberDto> findWomanOrManByPosition(Double lat, Double lon, Double distance,PrincipalDetails principalDetails) {
 
         MemberPosition northEast = GeometryUtil.calculate(lat, lon, distance, Direction.NORTHEAST.getBearing());
         MemberPosition southWest = GeometryUtil.calculate(lat, lon, distance, Direction.SOUTHWEST.getBearing());
@@ -146,15 +146,31 @@ public class MemberService {
         String pointFormat = String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2);
 
         List<Member> nearByMemberPostion = memberRepository.findNearByMemberPostion(pointFormat);
-//        String name = nearByMemberPostion.get(0).getName();
-//        System.out.println(name + "sol");
+        String name = nearByMemberPostion.get(0).getName();
+        for (Member member : nearByMemberPostion) {
+            System.out.println(member.getName() + "sol");
+        }
 
-        nearByMemberPostion.stream().map()
-        List<findMemberDto> findDto = (List<findMemberDto>) modelMapper.map(nearByMemberPostion, findMemberDto.class);
 
-        return findDto;
+        List<findMemberDto> findMemberDtoList = new ArrayList<>();
+        for (Member member : nearByMemberPostion) {
+            Images images = imagesRepository.findById(member.getId()).orElseThrow(() -> new IllegalStateException("member.getId())"));
+            String imgUrl = images.getImgUrl();
+
+            findMemberDto dto = findMemberDto.builder().profile(member.getMemberProfile()).position(member.getMemberPosition())
+                            .imagesUrl(imgUrl).introduce(member.getMemberProfile().getIntroduce())
+                            .nickname(member.getMemberProfile().getNickname()).name(member.getName())
+                    .build();
+
+            findMemberDtoList.add(dto);
+        }
+//        findMemberDto findDto =  modelMapper.map(nearByMemberPostion, findMemberDto.class);
+
+        return findMemberDtoList;
 
     }
+
+
 
 
 }

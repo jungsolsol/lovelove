@@ -41,11 +41,14 @@ public class InitDb {
             MemberProfile memberProfile = createMemberProfile(Sex.Female, 26, "seounghye", 162,
                     "student", Education.CollegeGraduate, "안녕하세요! ㅎㅎ", Religion.Christian,
                     have_Smoking.No, Alcohol.Sometime);
-            MemberPosition memberPosition = new MemberPosition(37.6107599, 127.0609386);
+            MemberPosition memberPosition = new MemberPosition(37.585740751391, 127.0299015542);
 
-            org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.6107599, 127.0609386);
+            org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.585740751391, 127.0299015542);
             Member member = createMember("seounghye", memberPosition, "이승혜", memberProfile, point);
+            Images images = new Images(member.getId(), member, "seounghye", "photos/20221020/seonghye.jpeg", null, "seonghye", 1111);
+
             em.persist(member);
+            em.persist(images);
 
         }
 
@@ -56,7 +59,10 @@ public class InitDb {
                     have_Smoking.Sometime, Alcohol.Sometime);
             org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.4795498, 126.9524267);
             Member member = createMember("yuna@naver.com", memberPosition, "정유나", memberProfile,point);
+            Images images = new Images(member.getId(), member, "yuna", "photos/20221020/yuna.jpeg", null, "yuna", 1111);
+
             em.persist(member);
+            em.persist(images);
 
         }
 
@@ -72,6 +78,7 @@ public class InitDb {
             Member member = new Member(email, memberPosition, name, memberProfile, point);
             return member;
         }
+
     }
 
 }

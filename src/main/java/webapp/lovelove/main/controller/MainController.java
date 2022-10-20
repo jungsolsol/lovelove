@@ -14,6 +14,8 @@ import webapp.lovelove.member.domain.MemberPosition;
 import webapp.lovelove.member.service.MemberService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,20 +33,39 @@ public class MainController {
     }
 
     @PostMapping("/love/main")
-    public void main_AddingLocation(@RequestParam("lat") String lat, @RequestParam("lon") String  lon,
-                                    @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+    public void main_AddingLocation(@RequestParam("lat") String lat, @RequestParam("lon") String lon,
+                                    @AuthenticationPrincipal PrincipalDetails principalDetails,
+                                    HttpServletResponse rs) {
 
-        Double lattoDouble = Double.parseDouble(lat);
-        Double lontoDouble = Double.parseDouble(lon);
-        memberService.setMemberPosition(lattoDouble, lontoDouble, principalDetails);
-//        List<Member> target = memberService.findWomanOrManByPosition(lattoDouble, lontoDouble, 0.5);
-        //위치에 따른 타겟 검색, 설정
-        List<findMemberDto> find = (List<findMemberDto>) memberService.findWomanOrManByPosition(lattoDouble,lontoDouble, 300.0);
+        try {
+            Double lattoDouble = Double.parseDouble(lat);
+            Double lontoDouble = Double.parseDouble(lon);
+            memberService.setMemberPosition(lattoDouble, lontoDouble, principalDetails);
 
-        System.out.println(find.get(0).getNickname());
+            //위치에 따른 타겟 검색, 설정
+            List<findMemberDto> find = memberService.findWomanOrManByPosition(lattoDouble, lontoDouble, 0.3, principalDetails);
 
-        model.addAttribute("target", find);
-        
+            for (findMemberDto findMemberDtos : find) {
+                System.out.println(findMemberDtos.getName());
+                System.out.println(findMemberDtos.getNickname());
+            }
 
+            //js에 값 반환
+            String lat1 = find.get(0).getPosition().getLat().toString();
+            String lon1 = find.get(0).getPosition().getLon().toString();
+
+            Map<String, Object> mv = new HashMap<>();
+            JSONObject jso = new JSONObject();
+            jso.put("name", find.get(0).getName());
+            jso.put("Clat", lat1);
+            jso.put("Clon", lon1);
+
+            rs.setContentType("text/html;charset=utf-8");
+            PrintWriter out = rs.getWriter();
+            out.print(jso.toString());
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
     }
 }

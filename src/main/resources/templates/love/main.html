@@ -15,7 +15,9 @@
 <div id="map" style="width:800px;height:600px;">
     <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script th:inline="javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e555062ab88e1ebe1463187ab4a9bcb9&libraries=services,cluster"></script>
-    <script th:inline="javascript">
+</div>
+</body>
+<script th:inline="javascript">
 
     navigator.geolocation.watchPosition(function (position) {
 
@@ -24,6 +26,13 @@
         var locPosition = new kakao.maps.LatLng(lat, lon);
 
 
+
+        // var markers = [];
+        //
+        // var mk = new kakao.maps.Marker({
+        //     map: map,
+        //     position: ${target}
+        // })
         var mapOption = {
 
             center: locPosition, // 지도의 중심좌표
@@ -38,25 +47,17 @@
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
         // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: locPosition,
-            image : markerImage,
-        });
-
-        // 주변 이성 DB 탐색
-
         var geocoder = new kakao.maps.services.Geocoder();
 
-        var callback = function(result, status) {
+
+        var callback = function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
                 console.log(result);
                 console.log(location);
                 getJson();
-                return geocoder[0].code;
+                // return geocoder[0].code;
 
-            }
-            else (console.log(result, status))
+            } else (console.log(result, status))
 
         };
 
@@ -66,25 +67,43 @@
             'lat': lat,
             'lon': lon,
         };
+        // 주변 이성 DB 탐색
         function getJson() {
             $.ajax({
                 type: "post",
                 url: "/love/main",
                 // headers : {'Authorization':'KakaoAK {e555062ab88e1ebe1463187ab4a9bcb9}'},
                 data: jsonData,
-                success : function(jsonData){
+
+                success: function (d) {
+                    var locs = new kakao.maps.LatLng(d.Clat, d.Clon);
                     //호출 성공하면 작성할 내용
-                    if (jsonData.lat != 0) { // 값이 있으면
-                        console.log(jsonData.lat, jsonData.lon);
-                    }
-                    },
-                    error:function(request,status,error){
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    }
-                }).done(function(data){});
+                    var test = d.name;
+                    console.log(test);
+                    console.log(d.Clon);
+                    var test2 = d.Clon;
+                    // var markers = new kakao.maps.Marker({
+                    //     map: map,
+                    //     position: locs,
+                    //     image: markerImage,
+                    // });
+
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: locPosition,
+                        image: markerImage,
+                    });
+
+                    alert(test);
+                },
+                error: function (request, status, error) {
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            }).done(function (data) {
+            });
         }
 
-        });
+    });
 
     var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 
@@ -95,8 +114,6 @@
         maximumAge: 0
     };
 </script>
-</div>
-</body>
 </html>
 
 

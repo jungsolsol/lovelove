@@ -22,6 +22,7 @@ public class Images {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @MapsId
     @JoinColumn(name = "member_Id")
     private Member member;
     private String imgName;
