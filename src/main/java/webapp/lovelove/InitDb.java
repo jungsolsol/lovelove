@@ -41,9 +41,10 @@ public class InitDb {
             MemberProfile memberProfile = createMemberProfile(Sex.Female, 26, "seounghye", 162,
                     "student", Education.CollegeGraduate, "안녕하세요! ㅎㅎ", Religion.Christian,
                     have_Smoking.No, Alcohol.Sometime);
-            MemberPosition memberPosition = new MemberPosition(37.585740751391, 127.0299015542);
+            MemberPosition memberPosition = new MemberPosition(37.555351847837, 126.93557855711
+            );
 
-            org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.585740751391, 127.0299015542);
+            org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.555351847837, 126.93557855711);
             Member member = createMember("seounghye", memberPosition, "이승혜", memberProfile, point);
             Images images = new Images(member.getId(), member, "seounghye", "photos/20221020/seonghye.jpeg", null, "seonghye", 1111);
 
@@ -53,11 +54,11 @@ public class InitDb {
         }
 
         public void db2() {
-            MemberPosition memberPosition = new MemberPosition(37.4795498, 126.9524267);
+            MemberPosition memberPosition = new MemberPosition(37.557192226011, 126.93453437724);
             MemberProfile memberProfile = createMemberProfile(Sex.Female, 26, "yuna", 168,
                     "announcer", Education.CollegeGraduate, "안녕 ", Religion.None,
                     have_Smoking.Sometime, Alcohol.Sometime);
-            org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.4795498, 126.9524267);
+            org.locationtech.jts.geom.Point point = GeometryUtil.createPoint(37.557192226011, 126.93453437724);
             Member member = createMember("yuna@naver.com", memberPosition, "정유나", memberProfile,point);
             Images images = new Images(member.getId(), member, "yuna", "photos/20221020/yuna.jpeg", null, "yuna", 1111);
 

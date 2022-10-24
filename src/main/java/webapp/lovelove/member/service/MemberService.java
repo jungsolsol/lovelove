@@ -146,10 +146,6 @@ public class MemberService {
         String pointFormat = String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2);
 
         List<Member> nearByMemberPostion = memberRepository.findNearByMemberPostion(pointFormat);
-        String name = nearByMemberPostion.get(0).getName();
-        for (Member member : nearByMemberPostion) {
-            System.out.println(member.getName() + "sol");
-        }
 
 
         List<findMemberDto> findMemberDtoList = new ArrayList<>();
