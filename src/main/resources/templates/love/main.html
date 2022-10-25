@@ -26,13 +26,6 @@
         var locPosition = new kakao.maps.LatLng(lat, lon);
 
 
-
-        // var markers = [];
-        //
-        // var mk = new kakao.maps.Marker({
-        //     map: map,
-        //     position: ${target}
-        // })
         var mapOption = {
 
             center: locPosition, // 지도의 중심좌표
@@ -80,85 +73,116 @@
                     console.log(d, typeof (d))
                     var positionList = new Array();
                     var contents = new Array();
+                    var intro = new Array();
+                    var nickname = new Array();
                     var img = new Array();
+
                     for (var i = 0; i < d.name.length; i++) {
                         positionList.push(new kakao.maps.LatLng(d.Clat[i], d.Clon[i]));
-
                         contents.push(d.name[i]);
-
-                        var placeName = document.createElement("div")
-                        placeName.innerHTML = contents[i];
-                        placeName.setAttribute("names", contents[i])
                         img.push(d.images[i]);
-                        var placeImg = document.createElement("img");
-                        placeImg.setAttribute("src", d.images[i]);
-
-                        // positionList.push(d.Clat[i], d.Clon[i]);
-                        // var locs = new kakao.maps.LatLng(d.Clat[i], d.Clon[i]);
+                        intro.push(d.introduce[i]);
+                        nickname.push(d.nickname[i]);
                     }
-                    console.log(positionList);
-                    console.log(contents);
-
 
 
                     //controller 에서 받아온 find list 를 맵에 추가
-                    for (var i = 0; i < positionList.length; i++) {
-
+                    positionList.forEach(function (pos) {
+                        console.log(pos);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: positionList[i],
+                            position: pos,
                             image: markerImage,
                             clickable: true,
 
                         });
-                        // alert(d.name);
 
-                        var cont = '<div class="wrap">';
-                        cont += '    <div class="head">';
-                        cont += '        <div class="placeName"><div class="close" onclick="closeOverlay()" title="닫기"></div>';
-                        cont += '        </div>';
-                        cont += '        <div class="body">';
-                        cont += '        <h3 text=${contents[i]}></h3>';
-                        cont += '            <div class="img">';
-                        cont += '                <img src=img[i] width="73" height="70">';
-                        cont += '           </div>';
-                        cont += '            <div class="desc">';
-                        cont += '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>';
-                        cont += '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>';
-                        cont += '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>';
-                        cont += '            </div>';
-                        cont += '        </div>';
-                        cont += '    </div>';
-                        cont +=    '</div>';
+                        var customOverlay = new kakao.maps.CustomOverlay({
+                            position: pos,
+                            clickable: true,
+                        })
 
-                        var infoWindow = new kakao.maps.InfoWindow({
-                            content: contents[i] + img[i], // 인포윈도우에 표시할 내용
-                            // content: cont,
-                            removable: true,
+
+                        // HTMLElement 구성
+                        //
+                        //
+                        var placeContent = document.createElement("div")
+                        placeContent.className = "place-content"
+
+                        var placeHead = document.createElement("div")
+                        placeHead.className = "place-head"
+                        var placeBody = document.createElement("div")
+                        placeBody.className = "place-body"
+
+                        var placeName = document.createElement("div");
+                        placeName.innerHTML = pos.contents;
+                        var placeImg = document.createElement("img");
+                        // placeImg.setAttribute("src", img[i]);
+                        var placeIntro = document.createElement("div");
+                        placeIntro.innerHTML = "소개 : " + intro;
+                        var placeNickname = document.createElement("div");
+                        placeNickname.innerHTML = nickname;
+                        var placeMessage = document.createElement("a");
+                        placeMessage.innerHTML = "메세지 전송";
+                        placeMessage.className = "place-message";
+                        placeMessage.addEventListener("click", () =>
+                            function () {
+                                document.querySelector(".modal").classList.remove("hidden");
+                            }
+                        );
+                        var placeDislike = document.createElement("a");
+                        placeDislike.innerHTML = "나가기";
+                        placeDislike.className = "place-dislike";
+                        placeDislike.onclick = closeOverlay();
+
+                        placeContent.append(placeHead, placeBody)
+                        placeHead.append(placeName, placeImg)
+                        placeBody.append(
+                            placeIntro,
+                            placeNickname,
+                            placeMessage,
+                            placeDislike,
+                        )
+                        customOverlay.setContent(placeContent);
+
+                        console.log(positionList);
+                        console.log(contents);
+                        console.log(intro);
+                        console.log(nickname);
+
+
+                        // kakao.maps.event.addListener(marker, 'click', function () {
+                        //     customOverlay.setMap(map);
+                        // });
+                        kakao.maps.event.addListener(marker, "click", () => {
+                            if (this.clickedOveray) {
+                                this.clickedOveray.setMap(null)
+                            }
+                            customOverlay.setMap(map)
+                            this.clickedOveray = customOverlay
+                        })
+                        kakao.maps.event.addListener(map, "click", function () {
+                            customOverlay.setMap(null)
                         });
-                        // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infoWindow));
-                        // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infoWindow));
-                        kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infoWindow));
 
-                    }
-                    //클릭 이벤트 발생 함수
-                    function makeClickListener(map, marker, infoWindow) {
-                        return function () {
-                            infoWindow.open(map, marker);
-                        };
-                    }
-                    function makeOverListener(map, marker, infoWindow) {
-                        return function() {
-                            infoWindow.open(map, marker);
-                        };
-                    }
+                        function closeOverlay() {
+                            customOverlay.setMap(null);
+                        }
+                    });
 
-                    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
-                    function makeOutListener(infoWindow) {
-                        return function() {
-                            infoWindow.close();
-                        };
-                    }
+
+                          // kakao.maps.event.addListener(maker, 'click', makeClickOverlayListner(map, marker, customOverlay));
+
+
+
+
+                    // function makeClickOverlayListner(map, marker, customOverlay) {
+                    //     return function () {
+                    //         customOverlay.open(map, marker);
+                    //     };
+                    //
+                    // }
+
                 },
                 error: function (request, status, error) {
                     alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
