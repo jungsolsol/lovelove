@@ -55,6 +55,7 @@
         };
 
         geocoder.coord2RegionCode(lon, lat, callback);
+        var data = new Array();
 
         let jsonData = {
             'lat': lat,
@@ -83,22 +84,35 @@
                         img.push(d.images[i]);
                         intro.push(d.introduce[i]);
                         nickname.push(d.nickname[i]);
+
                     }
+                    for (var i = 0; i < d.name.length; i++) {
+                        data.push({
+                            "name": contents[i],
+                            "imgs": img[i],
+                            "introduce": intro[i],
+                            "nick": nickname[i],
+                            "position": positionList[i],
+                        })
+                        }
+                    console.log(data)
+
+
 
 
                     //controller 에서 받아온 find list 를 맵에 추가
-                    positionList.forEach(function (pos) {
-                        console.log(pos);
+                    data.forEach(function (data) {
+                        console.log(data.position);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: pos,
+                            position: data.position,
                             image: markerImage,
                             clickable: true,
 
                         });
 
                         var customOverlay = new kakao.maps.CustomOverlay({
-                            position: pos,
+                            position: data.position,
                             clickable: true,
                         })
 
@@ -115,13 +129,13 @@
                         placeBody.className = "place-body"
 
                         var placeName = document.createElement("div");
-                        placeName.innerHTML = pos.contents;
+                        placeName.innerHTML = data.name;
                         var placeImg = document.createElement("img");
-                        // placeImg.setAttribute("src", img[i]);
+                        placeImg.setAttribute("src", data.imgs);
                         var placeIntro = document.createElement("div");
-                        placeIntro.innerHTML = "소개 : " + intro;
+                        placeIntro.innerHTML = "소개 : " + data.introduce;
                         var placeNickname = document.createElement("div");
-                        placeNickname.innerHTML = nickname;
+                        placeNickname.innerHTML = data.nick;
                         var placeMessage = document.createElement("a");
                         placeMessage.innerHTML = "메세지 전송";
                         placeMessage.className = "place-message";
