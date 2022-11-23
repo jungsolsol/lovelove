@@ -42,12 +42,7 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to AWS S3
-      run: |
-        aws deploy push \
-          --application-name loveplace \
-          --ignore-hidden-files \
-          --s3-location s3://loveplace-deploy/ \
-          --source .
+      run: aws s3 cp s3://loveplace-deploy/ .
 
 
   
