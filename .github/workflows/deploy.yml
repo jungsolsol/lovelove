@@ -42,7 +42,11 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to AWS S3
-      run: aws s3 cp s3://loveplace-deploy/ .
+      run: |
+          aws s3 cp \
+            --recursive \
+            --region ap-northeast-2 \
+            build s3://loveplace-deploy
 
 
   
