@@ -46,7 +46,7 @@ jobs:
         aws deploy push \
           --application-name loveplace \
           --ignore-hidden-files \
-          --s3-location s3://loveplace-deploy \
+          --s3-location s3://loveplace-deploy/ \
           --source .
 
 
