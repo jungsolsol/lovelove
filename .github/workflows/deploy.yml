@@ -39,5 +39,7 @@ jobs:
       with:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_PW }}
+        aws-region: ap-northeast-2
+
 
   
