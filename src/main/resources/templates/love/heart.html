@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>하트함</title>
+</head>
+<body style="text-align:  center">
+<h2 th:text="|${nick}님에게 호감표시한 사람들|"></h2>
+<table>
+    <thead >
+    <h2>받은 하트</h2>
+    <tr>
+        <th>보낸사람</th>
+        <th>사진</th>
+        <th>정보</th>
+        <th>받은시각</th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr th:each="list : ${heartlist}">
+        <td th:text="${list.senderNick}"></td>
+        <td><img src="${list.images}" width="30"></td>
+        <td th:text="${list.information}"></td>
+        <td th:text="${list.sendHeartTime}"></td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <h2>보낸하트</h2>
+    <tr>
+        <th>받은사람</th>
+        <th>사진</th>
+        <th>정보</th>
+        <th>받은시각</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="list : ${sendHeart}">
+        <td th:text="${list.receiverNick}"></td>
+        <td><img th:src="@{/love/} + ${list.receiverImages}" width="70"></td>
+        <td th:text="${list.receiverInfo}"></td>
+        <td th:text="${list.sendHeartTime}"></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{/love/main}">메인화면</a>
+</div>
+</body>
+</html>
+<style>
+    table {
+        margin: auto;
+        text-align: center;
+        border: 1px solid peachpuff;
+    }
+    td {
+        border: 1px solid peachpuff;
+
+    }
+    a {
+        margin-left: -3px;
+        text-decoration: none;
+        color: black;
+        font-size: 1.2em;
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    a:hover {
+        background-color: peachpuff;
+    }</style>

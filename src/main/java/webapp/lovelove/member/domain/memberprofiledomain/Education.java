@@ -1,5 +1,5 @@
 package webapp.lovelove.member.domain.memberprofiledomain;
 
 public enum Education {
-    JuniorHighSchoolGraduate, HighSchoolGraduate, CollegeGraduate, GraduateSchoolGraduate
+    고등학교졸업, 대학교졸업, 대학원졸업
     }

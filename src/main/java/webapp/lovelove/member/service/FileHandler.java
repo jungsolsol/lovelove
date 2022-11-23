@@ -1,11 +1,14 @@
 package webapp.lovelove.member.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import webapp.lovelove.member.domain.Member;
 import webapp.lovelove.member.domain.memberprofiledomain.Images;
+import webapp.lovelove.member.repository.MemberRepository;
 
+import javax.annotation.PreDestroy;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Path;
@@ -16,7 +19,11 @@ import java.util.Date;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
+
 public class FileHandler {
+
+    private final MemberRepository memberRepository;
     public List<Images> parseFileInfo(Member member, List<MultipartFile> files) throws Exception {
         List<Images> fileList = new ArrayList<>();
 
@@ -32,7 +39,7 @@ public class FileHandler {
 
         String abPath = new File("").getAbsoluteFile() +"/";
 
-        String path = "photos/" + currentDate;
+        String path = "src/main/resources/static/love/photos/" + currentDate;
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
@@ -47,7 +54,7 @@ public class FileHandler {
                     break;
                 } else {
                     if(contentType.contains("image/jpeg")){
-                        originalFileExtension = ".jpg";
+                        originalFileExtension = ".jpeg";
                     }
                     else if(contentType.contains("image/png")){
                         originalFileExtension = ".png";
@@ -60,11 +67,12 @@ public class FileHandler {
                         break;
                     }
                 }
-                String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
+
+                String new_file_name = member.getMemberProfile().getNickname() + originalFileExtension;
 
 
                 Images images = Images.builder().member(member).imgName(multipartFile.getOriginalFilename())
-                        .imgUrl(path +File.separator + new_file_name).file_size(multipartFile.getSize()).build();
+                        .imgUrl(path.substring(31) +File.separator + new_file_name).file_size(multipartFile.getSize()).build();
 
                 fileList.add(images);
 

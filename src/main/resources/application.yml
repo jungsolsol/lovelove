@@ -4,6 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/sol?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: 2014
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -13,13 +14,30 @@ spring:
         default_batch_fetch_size: 100
     database: mysql
     database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
+    defer-datasource-initialization: true
+
   profiles:
     include: oauth
+  sql:
+    init:
+      mode: always # 서버 시작시 항상 classpath의 sql문을 실행하도록 설정
+      continue-on-error: true # 서버 시작시 sql문을 실행할 때 오류 무시하고 계속 진행
+      data-locations: classpath:init.sql # 서버 시작시 dml sql문을 실행할 위치 및 파일 지정
+      schema-locations: classpath:init.sql # 서버 시작시 ddl sql문을 실행할 위치 및 파일 지정
 
+  messages:
+    basename: errors
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+    thymeleaf:
+      cache: false
 hibernate:
   dialect: org.hibernate.dialect.H2Dialect
 thymeleaf:
-  prefix=classpath: templates/
+  prefix: classpath:/templates/
   suffix: .html
   check-template-location: true
   cache: false

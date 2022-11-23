@@ -1,25 +1,46 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/html">
+
 <style>
     .fieldError {
         border-color: #bd2130;
     }
 </style>
 <head>
+    <link href="/css/main.css" rel="stylesheet" />
     <meta charset="utf-8">
-    <h1>LoveLove</h1>
-    <h2 th:text="|${member}님 주위의 이성|"></h2>
+    <h1 style="color: #bd2130; background: linear-gradient(to top, #f1f3f6 50%, transparent 50%); background-size: 100px">럽플
+    <h3 th:text="| ${member}님 주위 ${distance}m반경 이성|" style="text-align: left"></h3>
+    </h1>
+    <div style="text-align: left">
+        <form th:action="@{/love/main/distance}" method="post">
+            <input type="text" id="name" name="distance" placeholder="기본설정 300m" required
+                   minlength="3" maxlength="3" size="12" style="text-align: left" th:method="post">
+            <button type="submit" id="distance">변경</button>
+        </form>
+    </div>
+    </h3>
 
+
+    <a th:href="@{/love/message/{nick}/received(nick=${nick})}">메시지함</a>
+    <a th:href="@{/love/main/{nick}(nick=${nick})}">내정보</a>
+    <a th:id="likedButton" th:href="@{/love/main/heart}">나를 좋아하는사람들</a>
 </head>
-<body>
-<div id="map" style="width:800px;height:600px;">
+<body style="text-align: center">
+<div class="map" id="map" style="width:auto;height:600px;padding-top: 10px;">
     <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script th:inline="javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e555062ab88e1ebe1463187ab4a9bcb9&libraries=services,cluster"></script>
 </div>
 </body>
-<script th:inline="javascript">
 
+<script th:inline="javascript" >
+
+
+    /*<![CDATA[*/
     navigator.geolocation.watchPosition(function (position) {
+
+        console.log(sessionStorage)
+
 
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
@@ -35,18 +56,17 @@
         // 지도를 생성한다
 
         var map = new kakao.maps.Map(mapContainer, mapOption);
-        var imageSrc = "/images/heart.svg"
+        var imageSrc = "/images/hearts.svg"
+        var myImageSrc = "/images/myHeart.svg"
         var imageSize = new kakao.maps.Size(24, 35);
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
+        var myMarker = new kakao.maps.MarkerImage(myImageSrc, imageSize);
         // 마커를 생성합니다
         var geocoder = new kakao.maps.services.Geocoder();
 
 
-        var callback = function (result, status) {
+            var callback=function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                console.log(result);
-                console.log(location);
                 getJson();
                 // return geocoder[0].code;
 
@@ -67,6 +87,8 @@
                 type: "post",
                 url: "/love/main",
                 dataType : "json",
+                cache: true, //캐시데이타
+
                 // headers : {'Authorization':'KakaoAK {e555062ab88e1ebe1463187ab4a9bcb9}'},
                 data: jsonData,
                 success: function (d) {
@@ -77,10 +99,19 @@
                     var intro = new Array();
                     var nickname = new Array();
                     var img = new Array();
+                    // var liked = new Array();
 
+
+                    sessionStorage.setItem(d.nickname, "null");
+
+                    console.log(d.myname);
                     for (var i = 0; i < d.name.length; i++) {
                         positionList.push(new kakao.maps.LatLng(d.Clat[i], d.Clon[i]));
+
+
+                        // liked.push(d.liked[i]);
                         contents.push(d.name[i]);
+
                         img.push(d.images[i]);
                         intro.push(d.introduce[i]);
                         nickname.push(d.nickname[i]);
@@ -93,109 +124,180 @@
                             "introduce": intro[i],
                             "nick": nickname[i],
                             "position": positionList[i],
+                            "myname" : d.myname[i]
                         })
-                        }
+
+                    }
                     console.log(data)
-
-
-
 
                     //controller 에서 받아온 find list 를 맵에 추가
                     data.forEach(function (data) {
-                        console.log(data.position);
-                        var marker = new kakao.maps.Marker({
-                            map: map,
-                            position: data.position,
-                            image: markerImage,
-                            clickable: true,
-
-                        });
-
-                        var customOverlay = new kakao.maps.CustomOverlay({
-                            position: data.position,
-                            clickable: true,
-                        })
 
 
-                        // HTMLElement 구성
-                        //
-                        //
-                        var placeContent = document.createElement("div")
-                        placeContent.className = "place-content"
 
-                        var placeHead = document.createElement("div")
-                        placeHead.className = "place-head"
-                        var placeBody = document.createElement("div")
-                        placeBody.className = "place-body"
+                        if (data.name != data.myname) {
 
-                        var placeName = document.createElement("div");
-                        placeName.innerHTML = data.name;
-                        var placeImg = document.createElement("img");
-                        placeImg.setAttribute("src", data.imgs);
-                        var placeIntro = document.createElement("div");
-                        placeIntro.innerHTML = "소개 : " + data.introduce;
-                        var placeNickname = document.createElement("div");
-                        placeNickname.innerHTML = data.nick;
-                        var placeMessage = document.createElement("a");
-                        placeMessage.innerHTML = "메세지 전송";
-                        placeMessage.className = "place-message";
-                        placeMessage.addEventListener("click", () =>
-                            function () {
-                                document.querySelector(".modal").classList.remove("hidden");
+                            var marker = new kakao.maps.Marker({
+                                map: map,
+                                position: data.position,
+                                image: markerImage,
+                                clickable: true,
+
+                            });
+                            console.log(data.name, data.myname);
+
+                            var customOverlay = new kakao.maps.CustomOverlay({
+                                position: data.position,
+                                clickable: true,
+                                xAnchor: 0.3,
+                                yAnchor: 0.91
+                            });
+
+                            var placeContent = document.createElement("div");
+                            placeContent.className = "place-content";
+                            placeContent.style.backgroundColor = 'white';
+                            var placeHead = document.createElement("div");
+                            placeHead.className = "place-head";
+                            placeHead.style.display = "flex";
+                            var placeBodyWarp = document.createElement("div");
+                            placeBodyWarp.className = "place-body-wrap";
+                            var placeBody = document.createElement("div");
+                            placeBody.className = "place-body";
+                            placeBody.setAttribute("bgcolor", "white");
+                            var placeName = document.createElement("div");
+                            placeName.innerHTML = data.name;
+                            var placeImg = document.createElement("img");
+                            placeImg.className = "target-img";
+                            var imgspath = data.imgs;
+                            placeImg.setAttribute("src", imgspath);
+                            placeImg.setAttribute("width", "45");
+                            var placeIntro = document.createElement("div");
+                            placeIntro.innerHTML = "소개 : " + data.introduce;
+                            var placeNickname = document.createElement("div");
+                            placeNickname.innerHTML = data.nick;
+                            var placeMessage = document.createElement("button");
+                            placeMessage.innerHTML = "메세지 전송";
+                            placeMessage.className = "place-message";
+                            placeMessage.id = "button-message"
+                            var placeLike = document.createElement("img");
+
+                            placeLike.className = sessionStorage.getItem(data.nick);
+
+                            if (placeLike.className == "fill") {
+                                placeLike.setAttribute("src", "/images/like.png");
+                            } else if (placeLike.className == "empty") {
+                                placeLike.setAttribute("src", "/images/dislike.png");
+                            } else {
+                                placeLike.setAttribute("src", "/images/dislike.png");
                             }
-                        );
-                        var placeDislike = document.createElement("a");
-                        placeDislike.innerHTML = "나가기";
-                        placeDislike.className = "place-dislike";
-                        placeDislike.onclick = closeOverlay();
+                            placeLike.setAttribute("width", "18");
 
-                        placeContent.append(placeHead, placeBody)
-                        placeHead.append(placeName, placeImg)
-                        placeBody.append(
-                            placeIntro,
-                            placeNickname,
-                            placeMessage,
-                            placeDislike,
-                        )
-                        customOverlay.setContent(placeContent);
-
-                        console.log(positionList);
-                        console.log(contents);
-                        console.log(intro);
-                        console.log(nickname);
+                            placeMessage.addEventListener("click", function () {
+                                        var nick = data.nick;
+                                        location.href = "/love/message/" + nick;
+                                }
+                            );
 
 
-                        // kakao.maps.event.addListener(marker, 'click', function () {
-                        //     customOverlay.setMap(map);
-                        // });
-                        kakao.maps.event.addListener(marker, "click", () => {
-                            if (this.clickedOveray) {
-                                this.clickedOveray.setMap(null)
+                            var placeDislike = document.createElement("button");
+                            placeDislike.innerHTML = "나가기";
+                            placeDislike.className = "place-dislike";
+                            placeDislike.onclick = customOverlay.setMap(null);
+
+
+                            placeContent.append(placeHead, placeBody);
+                            // modalContent.append(modalWrap);
+                            placeHead.append(placeName, placeLike);
+                            placeBody.append(
+                                placeImg,
+                                placeIntro,
+                                placeNickname,
+                                placeMessage,
+                                placeDislike,
+                            );
+                            placeLike.addEventListener("click", function (d) {
+                                let nick = data.nick;
+
+                                console.log(d)
+                                console.log(d.target.src);
+                                console.log(placeLike);
+                                console.log(d.target);
+
+
+                                if (d.target.className != "fill") {
+                                    alert("좋아요");
+                                    $.ajax({
+                                            url: "/love/main/heart/" + nick,
+                                            dataType: "json",
+                                            type: 'get',
+                                            cache: true, //캐시데이타
+
+                                        success: function (response) {
+
+                                                console.alert("좋아요!")
+                                            },
+                                            error: function () {
+                                                console.log(this.url);
+                                            },
+                                        });
+                                    d.target.src = "/images/like.png";
+                                    sessionStorage.setItem(nick, "fill")
+                                    return placeLike.className = "fill";
+
+
+                                }
+                                // else if (d.target.src = "/images/like.png") {
+                                else {
+                                        alert("좋아요 해제");
+                                        $.ajax({
+                                            url: "/love/main/heart/" + nick,
+                                            dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정한다. 없으면 알아서 판단한다.
+                                            type: 'get',
+                                            cache: true, //캐시데이타
+
+                                            success: function (response) {
+
+                                                console.alert("좋아요!")
+                                            },
+                                            error: function () {
+                                                console.log(this.url);
+
+                                            },
+                                        });
+                                    sessionStorage.setItem(nick, "empty")
+                                    d.target.src = "/images/dislike.png";
+                                    return placeLike.className = "empty";
+
+                                }
+                             });
+
+                            customOverlay.setContent(placeContent);
+
+                            kakao.maps.event.addListener(marker, "click", () => {
+                                if (this.clickedOveray) {
+                                    this.clickedOveray.setMap(null)
+                                }
+                                customOverlay.setMap(map)
+                                this.clickedOveray = customOverlay
+
+                            });
+                            kakao.maps.event.addListener(map, "click", function () {
+                                customOverlay.setMap(null)
+                            });
+
+                            function closeOverlay() {
+                                customOverlay.setMap(null);
                             }
-                            customOverlay.setMap(map)
-                            this.clickedOveray = customOverlay
-                        })
-                        kakao.maps.event.addListener(map, "click", function () {
-                            customOverlay.setMap(null)
-                        });
+                        } else {
+                            var marker = new kakao.maps.Marker({
+                                map: map,
+                                position: data.position,
+                                image: myMarker,
+                                clickable: false,
 
-                        function closeOverlay() {
-                            customOverlay.setMap(null);
+                            });
                         }
                     });
-
-
-                          // kakao.maps.event.addListener(maker, 'click', makeClickOverlayListner(map, marker, customOverlay));
-
-
-
-
-                    // function makeClickOverlayListner(map, marker, customOverlay) {
-                    //     return function () {
-                    //         customOverlay.open(map, marker);
-                    //     };
-                    //
-                    // }
 
                 },
                 error: function (request, status, error) {
@@ -206,7 +308,6 @@
         }
 
     });
-
     var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 
 
@@ -215,6 +316,57 @@
         timeout: 5000,
         maximumAge: 0
     };
+
+    function btn_listener(ev) {
+        switch (ev.target.id) {
+            case 'button-message':
+                var nick = data.nick;
+                location.href = "/love/message/" + nick;
+
+            case 'button-received':
+                location.href = '/love/message/received';
+        }
+    }
+
+    /*]]>*/
+
 </script>
 </html>
 
+<style>
+    head {
+        display: flex;
+        border-top: 1px solid #f1f3f6;
+
+    }
+    a {text-decoration: none;
+        background-color: #f1f3f6;
+        color: black;
+        font-weight: bold;
+        font-size: 1.3em;
+        justify-content: center;
+
+    }
+    a:hover {
+        color: peachpuff;
+    }
+    .map {
+
+    }
+    button {
+        text-decoration: none;
+        background-color: #f1f3f6;
+        color: black;
+        font-weight: bold;
+        font-size: 0.9em;
+        justify-content: center;
+        border: 0;
+
+    }
+
+    button:hover {
+        color: peachpuff;
+
+    }
+
+</style>

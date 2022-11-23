@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LoveLove</title>
+    <meta charset="UTF-8" />
+</head>
+
+<body style="text-align: center">
+<form th:action="@{/love/message/{nick}(nick=${nick})}" method="post">
+    <h1 th:text="|${nick}님에게 메시지 전송|"></h1>
+    <textarea rows="3"
+            name="message"
+              style="width: 600px; height: 300px"
+            placeholder="메시지를 작성하세요"
+    >
+    </textarea>
+    <div>
+        <button type="submit" id="btn">전송</button>
+        <a  th:href="@{/love/main}">메인화면</a>
+    </div>
+</form>
+
+</body>
+
+</html>
+<style>
+    button {
+        margin-right: -2px;
+        font-size: 1.2em;
+        color: black;
+        background-color: white;
+        text-align: center;
+        font-weight: bold;
+        border: 0;
+    }
+    button:hover {
+        background-color: peachpuff;
+
+    }
+    a {
+        margin-left: -3px;
+        text-decoration: none;
+        color: black;
+        font-size: 1.2em;
+        text-align: center;
+        font-weight: bold;
+
+    }
+    a:hover {
+        background-color: peachpuff;
+    }
+
+</style>

@@ -39,7 +39,7 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
         if (memberEntity == null) {
             Member createMember = Member.builder().name(name).email(email)
                     .provider(provider).providerId(providerId)
-                    .role(role).memberProfile(MemberProfile.builder().have_smoking(have_Smoking.No).build()).build();
+                    .role(role).memberProfile(MemberProfile.builder().build()).build();
 
             memberRepository.save(createMember);
 

@@ -14,7 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Images {
+public class
+Images {
 
     @Id
     @GeneratedValue
@@ -23,8 +24,9 @@ public class Images {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "member_Id")
+    @JoinColumn(name = "member_id")
     private Member member;
+
     private String imgName;
 
     @NotEmpty

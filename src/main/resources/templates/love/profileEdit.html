@@ -1,0 +1,114 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>프로필 수정</title>
+</head>
+<body>
+<h2 th:text="|${nick}님 프로필 수정|">프로필 수정</h2>
+<form action="#" class="col-sm-6"
+      th:action="@{/love/main/{nick}/edit(nick=${nick})}" th:object="${profileDto}" method="post" novalidate>
+    <div class="container" style="display: inline-block">
+    <div class="form-group">
+    <label for="information">한 줄 소개</label>
+    <input id="information" type="text" th:field="*{information}" class="form-control"
+           placeholder="간략한 소개를 부탁합니다." aria-describedby="bioHelp" required>
+    <small id="informationHelp" class="form-text text-muted">
+        길지 않게 35자 이내로 입력하세요.
+    </small>
+    <small class="form-text text-danger" th:if="${#fields.hasErrors('information')}" th:errors="*{information}">
+        조금 길어요.
+    </small>
+    </div>
+    <div class="form-group">
+        <label th:for="haveSmoke">담배는 피우시나요?</label>
+        <select th:name="profileDto" th:field="*{haveSmoke}" >
+        <option th:each="haveSmoke :${T(webapp.lovelove.member.domain.memberprofiledomain.have_Smoking).values()}"
+                th:value="${haveSmoke}"
+                th:text="${haveSmoke}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label th:for="haveAlcohol">술은 얼마나드세요?</label>
+        <select th:name="profileDto" th:field="*{haveAlcohol}" >
+            <option th:each="haveAlcohol :${T(webapp.lovelove.member.domain.memberprofiledomain.Alcohol).values()}"
+                    th:value="${haveAlcohol}"
+                    th:text="${haveAlcohol}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+    <label th:for="haveReligion">종교는요?</label>
+    <select th:name="profileDto" th:field="*{haveReligion}" >
+        <option th:each="haveReligion :${T(webapp.lovelove.member.domain.memberprofiledomain.Religion).values()}"
+                th:value="${haveReligion}"
+                th:text="${haveReligion}"></option>
+    </select>
+</div>
+    <div class="form-group">
+    <label>프로필사진 바꿀까요?</label>
+        <img th:src="@{/love/} + ${profileDto.images}" width="230">
+    </div>
+
+        <button class="btn btn-primary btn-block" type="submit" aria-describedby="submitHelp">수정하기</button>
+    </div>
+
+
+</form>
+
+</body>
+</html>
+<style>
+    body {
+
+        text-align: center;
+        margin: 0;
+    }
+
+    .container {
+        font-size: 15px;
+        font-weight: bold;
+        width: 500px;
+        height: 500px;
+        border-top: 1px solid #f1f3f6;
+        border-bottom: 1px solid #f1f3f6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+    }
+
+    .form-group {
+        width: 400px;
+        padding: 5px;
+        float: left;
+        margin: 0 10px;
+        text-align: left;
+
+    }
+
+    button {
+        padding-top: 15%;
+        margin-left: -3px;
+        text-decoration: none;
+        color: black;
+        font-size: 1.5em;
+        font-weight: bold;
+        background-color: #ffffff;
+        border: 0;
+
+
+    }
+
+    .form-group {
+        width: 400px;
+        padding: 5px;
+        float: left;
+        margin: 0 10px;
+        text-align: left;
+    }
+    button:hover {
+        background-color: peachpuff;
+    }</style>

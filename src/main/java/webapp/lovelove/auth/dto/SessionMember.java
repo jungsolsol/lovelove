@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import webapp.lovelove.member.domain.Member;
 import webapp.lovelove.member.domain.MemberProfile;
 import webapp.lovelove.member.domain.Role;
-import webapp.lovelove.member.domain.dto.MemberCreateDto;
 
 import java.io.Serializable;
 

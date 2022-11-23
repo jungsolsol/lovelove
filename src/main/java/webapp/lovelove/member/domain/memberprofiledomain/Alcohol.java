@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.stream.Stream;
 
 public enum Alcohol {
-    No, Sometime, Always;
+    전혀, 가끔먹어요, 자주먹어요;
 
     @JsonCreator
     public static Alcohol create(String requestValue) {

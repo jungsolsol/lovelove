@@ -20,6 +20,7 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -29,15 +30,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'mysql:mysql-connector-java'
+
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 	implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.10.Final'
-	compileOnly 'org.apache.tomcat:tomcat-servlet-api:9.0.37'
+	implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 
+	compileOnly 'org.apache.tomcat:tomcat-servlet-api:9.0.37'
 
 	runtimeOnly 'com.h2database:h2:1.4.200'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
 }
 
 tasks.named('test') {

@@ -1,5 +1,5 @@
 package webapp.lovelove.member.domain.memberprofiledomain;
 
 public enum Sex {
-    Male, Female
+    남자, 여자
 }
