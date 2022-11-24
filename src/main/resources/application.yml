@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://loveplace-database.c5m9nthmvewx.ap-northeast-2.rds.amazonaws.com:3306/sol
     username: admin
     password: wjdthf1212
+  profiles:
+    include: oauth
 
   jpa:
     hibernate:
@@ -16,8 +18,6 @@ spring:
     database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
     defer-datasource-initialization: true
 
-  profiles:
-    include: oauth
   sql:
     init:
       mode: always # 서버 시작시 항상 classpath의 sql문을 실행하도록 설정
