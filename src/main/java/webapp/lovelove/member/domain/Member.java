@@ -48,8 +48,9 @@ public class Member {
     @Embedded
     private MemberPosition memberPosition;
 
-    @Column(name = "member_point")
+    @Column(name = "member_point", length = 1000)
     private Point point;
+
 
 
     private int messageSendCount;
