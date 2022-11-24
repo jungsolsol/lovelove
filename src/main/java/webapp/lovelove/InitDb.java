@@ -56,10 +56,6 @@ public class InitDb {
 
             em.persist(member);
             em.persist(images);
-//
-//            MessageUpdateDto messageUpdateDto = new MessageUpdateDto("hihihi", member.getMemberProfile().getNickname(), "sol", LocalDateTime.now());
-//            Message message = MessageUpdateDto.toEntity(messageUpdateDto);
-//            em.persist(message);
         }
 
         public void db2() {
