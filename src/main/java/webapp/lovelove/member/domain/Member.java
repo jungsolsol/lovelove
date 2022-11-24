@@ -48,7 +48,7 @@ public class Member {
     @Embedded
     private MemberPosition memberPosition;
 
-    @Column(name = "member_point", length = 1000)
+    @Column(name = "member_point", length = 3000)
     private Point point;
 
 
