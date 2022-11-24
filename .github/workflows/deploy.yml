@@ -12,6 +12,12 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+env:
+  AWS_REGION: ap-northeast-2
+  S3_BUCKET_NAME: loveplace-deploy
+  CODE_DEPLOY_APPLICATION_NAME: loveplace-codedeploy-app
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: loveplace-deployment-group
+
 
 permissions:
   contents: read
