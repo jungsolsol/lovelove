@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sol?serverTimezone=UTC&characterEncoding=UTF-8?useSSL=false
+    url: jdbc:mysql://ec2-3-36-237-156.ap-northeast-2.compute.amazonaws.com:3306/sol?useSSL=false?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: 2014
 
