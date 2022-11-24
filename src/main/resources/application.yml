@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://ec2-3-36-237-156.ap-northeast-2.compute.amazonaws.com:3306/sol?useSSL=false?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: 2014
+    url: jdbc:mysql://loveplace-database.c5m9nthmvewx.ap-northeast-2.rds.amazonaws.com:3306/sol?useSSL=false?serverTimezone=UTC&characterEncoding=UTF-8
+    username: admin
+    password: wjdthf1212!!
 
   jpa:
     hibernate:
