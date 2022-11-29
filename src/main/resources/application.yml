@@ -1,4 +1,6 @@
 spring:
+  server:
+    use-forward-headers: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://loveplace-database.c5m9nthmvewx.ap-northeast-2.rds.amazonaws.com:3306/sol
