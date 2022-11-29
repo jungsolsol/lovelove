@@ -21,5 +21,5 @@ JAR_NAME=$(ls -tr $PROJECT_ROOT/ | grep jar | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 nohup java -jar \
--Dspring.config.location=classpath:/application-oauth.yml,/home/ubuntu/app/src/main/resources/application-oauth.properties \
+-Dspring.config.location=/home/ubuntu/app/src/main/resources/application-oauth.yml \
   $PROJECT_ROOT/$JAR_NAME 2>&1 &
