@@ -17,9 +17,7 @@ echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 #nohup java -jar $JAR_FILE > $APP_LOG 2> $ERROR_LOG &
 
 echo "> 새 애플리케이션 배포"
-
-JAR_NAME=$(ls -tr PROJECT_ROOT/ | grep jar | tail -n 1)
-
+JAR_NAME=$(ls -tr $PROJECT_ROOT/ | grep jar | tail -n 1)
 echo "> JAR Name: $JAR_NAME"
 
 nohup java -jar \
