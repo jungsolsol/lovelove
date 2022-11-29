@@ -6,7 +6,6 @@ JAR_FILE="$PROJECT_ROOT/spring-webapp.jar"
 APP_LOG="$PROJECT_ROOT/application.log"
 ERROR_LOG="$PROJECT_ROOT/error.log"
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
-
 TIME_NOW=$(date +%c)
 
 # build 파일 복사
@@ -17,9 +16,12 @@ cp $PROJECT_ROOT/build/libs/*.jar $JAR_FILE
 echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 #nohup java -jar $JAR_FILE > $APP_LOG 2> $ERROR_LOG &
 
-nohup java -jar
-   -Dspring.config.location=classpath:/application-oauth.yml,/home/ec2-user/app/application-oauth.properties
-   $REPOSITORY / &JAR_FILE > $APP_LOG 2> $ERROR_LOG & 2>&1
+echo "> 새 애플리케이션 배포"
 
-CURRENT_PID=$(pgrep -f $JAR_FILE)
-echo "$TIME_NOW > 실행된 프로세스 아이디 $CURRENT_PID 입니다." >> $DEPLOY_LOG
+JAR_NAME=$(ls -tr PROJECT_ROOT/ | grep jar | tail -n 1)
+
+echo "> JAR Name: $JAR_NAME"
+
+nohup java -jar \
+-Dspring.config.location=classpath:/application-oauth.yml,/home/ubuntu/app/src/main/resources/application-oauth.properties \
+   $PROJECT_ROOT/$JAR_NAME 2>&1 &
