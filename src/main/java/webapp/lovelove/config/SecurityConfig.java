@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import webapp.lovelove.auth.CustomOAuth2UserService;
 import webapp.lovelove.member.domain.Role;
@@ -26,6 +28,10 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
+    }
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -34,10 +40,18 @@ public class SecurityConfig {
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll().and()
+                .anyRequest().permitAll()
+                .and()
+                .authorizeRequests()
+                .and()
                 .logout().logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
+                .authorizationEndpoint().baseUri("/oauth2/authorization") // 소셜 로그인 Url
+                .authorizationRequestRepository(new HttpCookieOAuth2AuthorizationRequestRepository()) // 인증 요청을 쿠키에 저장하고 검색
+                .and()
+                .redirectionEndpoint().baseUri("/oauth2/callback/*") // 소셜 인증 후 Redirect Url
+                .and()
 //                .loginPage("/login")
 //                .authorizationEndpoint()
 //                .baseUri("/login/oauth2/code/google")
@@ -51,6 +65,8 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 
 }
 
