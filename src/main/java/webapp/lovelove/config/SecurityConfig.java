@@ -42,7 +42,6 @@ public class SecurityConfig {
                 .oauth2Login()
                 .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig.baseUri("/"))
                 .defaultSuccessUrl("/")
-                .failureUrl("/login")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
         return http.build();
