@@ -39,12 +39,12 @@ public class SecurityConfig {
                 .and()
                 .oauth2Login()
 //                .loginPage("/login")
-                .authorizationEndpoint()
-                .baseUri("/login/oauth2/code/google")
+//                .authorizationEndpoint()
+//                .baseUri("/login/oauth2/code/google")
 //                .redirectionEndpoint().baseUri("/login/oauth2/code/google")
 //                .and()
-//                .redirectionEndpoint().baseUri("/")
-                .and()
+//                ().baseUri("/")
+//                .and()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 
