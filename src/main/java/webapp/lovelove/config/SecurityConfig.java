@@ -40,9 +40,9 @@ public class SecurityConfig {
                 .loginPage("/auth/login").defaultSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .loginPage("/loginForm")
+                .loginPage("/login")
                 .defaultSuccessUrl("/")
-                .failureUrl("/loginForm")
+                .failureUrl("/login")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
         return http.build();
