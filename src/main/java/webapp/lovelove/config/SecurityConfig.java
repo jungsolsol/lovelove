@@ -40,9 +40,12 @@ public class SecurityConfig {
                 .loginPage("/auth/login").defaultSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .redirectionEndpoint().baseUri("/login/oauth2/code/google")
+                .authorizationEndpoint()
+                .baseUri("/login/oauth2/code/google")
+//                .redirectionEndpoint().baseUri("/login/oauth2/code/google")
                 .and()
-                .defaultSuccessUrl("/",true)
+                .redirectionEndpoint().baseUri("/")
+                .and()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 
