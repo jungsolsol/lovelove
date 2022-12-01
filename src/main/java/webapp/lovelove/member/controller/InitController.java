@@ -37,8 +37,13 @@ public class InitController {
         } catch (NullPointerException e) {
         }
         return "page/init";
-
     }
+    @GetMapping("/loginForm")
+    public String loginForm(){
+
+        return "page/init";
+    }
+
 
     @GetMapping("/member/profile")
     public String createProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
