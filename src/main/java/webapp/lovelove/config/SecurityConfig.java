@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .loginPage("/auth/login").defaultSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .loginPage("/login")
+                .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig.baseUri("/"))
                 .defaultSuccessUrl("/")
                 .failureUrl("/login")
                 .userInfoEndpoint()
