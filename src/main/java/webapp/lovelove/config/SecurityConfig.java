@@ -42,7 +42,6 @@ public class SecurityConfig {
                 .oauth2Login()
                 .redirectionEndpoint().baseUri("/login/oauth2/code/google")
                 .and()
-                .defaultSuccessUrl("/",true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 
