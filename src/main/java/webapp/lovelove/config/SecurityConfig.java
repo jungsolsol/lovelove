@@ -31,7 +31,6 @@ import webapp.lovelove.member.domain.Role;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
     private String clientId;
@@ -39,6 +38,8 @@ public class SecurityConfig {
     @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
     private String clientSecret;
 
+    private final CustomOAuth2UserService customOAuth2UserService;
+    
 
     @Bean
     public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
