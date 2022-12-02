@@ -1,6 +1,7 @@
 package webapp.lovelove.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 
@@ -27,13 +28,17 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User auth2User = super.loadUser(userRequest);
+//        OAuth2User auth2User = super.loadUser(userRequest);
+        OAuth2User auth2User= (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // (1)
+
         String provider = userRequest.getClientRegistration().getClientId();
         String providerId = auth2User.getAttribute("sub");
         String name = auth2User.getAttribute("name");
         String email = auth2User.getAttribute("email");
         String role = "ROLE_USER";
         Member memberEntity = memberRepository.findByEmail(email);
+
+
 
 
         if (memberEntity == null) {
