@@ -47,11 +47,12 @@ public class SecurityConfig {
                 .logout().logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .authorizationEndpoint().baseUri("/oauth2/authorization") // 소셜 로그인 Url
-                .authorizationRequestRepository(new HttpCookieOAuth2AuthorizationRequestRepository()) // 인증 요청을 쿠키에 저장하고 검색
-                .and()
+//                .authorizationEndpoint().baseUri("/oauth2/authorization") // 소셜 로그인 Url
+//                .authorizationRequestRepository(new HttpCookieOAuth2AuthorizationRequestRepository()) // 인증 요청을 쿠키에 저장하고 검색
                 .redirectionEndpoint().baseUri("/oauth2/callback/*") // 소셜 인증 후 Redirect Url
                 .and()
+                .defaultSuccessUrl("/",true)			// 로그인 성공하면 "/" 으로 이동
+//                .and()
 //                .loginPage("/login")
 //                .authorizationEndpoint()
 //                .baseUri("/login/oauth2/code/google")
