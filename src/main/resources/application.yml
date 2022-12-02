@@ -36,13 +36,6 @@ spring:
       enabled: true
     thymeleaf:
       cache: false
-thymeleaf:
-  prefix: classpath:/templates/
-  suffix: .html
-  check-template-location: true
-  cache: false
-  mvc:
-    static-path-pattern: "/static/**"
 
   security:
     oauth2:
@@ -51,3 +44,11 @@ thymeleaf:
           google:
             client-id: 372992379675-71mfmso0ak61n17effmcg0mnj96ovp7p.apps.googleusercontent.com
             client-secret: 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
+
+thymeleaf:
+  prefix: classpath:/templates/
+  suffix: .html
+  check-template-location: true
+  cache: false
+  mvc:
+    static-path-pattern: "/static/**"
