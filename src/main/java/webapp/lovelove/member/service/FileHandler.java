@@ -1,11 +1,15 @@
 package webapp.lovelove.member.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import webapp.lovelove.member.domain.Member;
+import webapp.lovelove.member.domain.dto.ImageDto;
 import webapp.lovelove.member.domain.memberprofiledomain.Images;
+import webapp.lovelove.member.repository.ImagesRepository;
 import webapp.lovelove.member.repository.MemberRepository;
 
 import javax.annotation.PreDestroy;
@@ -18,14 +22,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
-
+//@Component
+@AllArgsConstructor
+@Service
 public class FileHandler {
 
+    private final ImagesRepository imagesRepository;
     private final MemberRepository memberRepository;
+
+
+    public Images savePost(Images images) {
+        imagesRepository.save(images);
+
+        return images;
+    }
+
     public List<Images> parseFileInfo(Member member, List<MultipartFile> files) throws Exception {
         List<Images> fileList = new ArrayList<>();
+
 
 
         //빈파일이 들어올땐 빈것을 반환
@@ -84,4 +98,5 @@ public class FileHandler {
         }
         return fileList;
     }
+
 }

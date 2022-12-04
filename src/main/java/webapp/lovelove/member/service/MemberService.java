@@ -80,8 +80,14 @@ public class MemberService {
                 List<Images> imageBeans = new ArrayList<>();
                 for (Images image : images) {
 //                    image.s(member.getId());
+                    /**
+                     * 추가
+                     */
+                    imageBeans.add(fileHandler.savePost(image));
+
                     imageBeans.add(imagesRepository.save(image));
                 }
+
 
                 mappedProfile.setImagesUrl(imageBeans);
                 member.updateProfile(mappedProfile);

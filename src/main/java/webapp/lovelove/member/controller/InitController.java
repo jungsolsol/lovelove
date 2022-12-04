@@ -14,6 +14,7 @@ import webapp.lovelove.auth.PrincipalDetails;
 import webapp.lovelove.member.domain.dto.MemberCreateDto;
 import webapp.lovelove.member.service.FileHandler;
 import webapp.lovelove.member.service.MemberService;
+import webapp.lovelove.member.service.S3Service;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class InitController {
     private final MemberService memberService;
 
     private final FileHandler fileHandler;
+
+    private final S3Service s3Service;
 
     @GetMapping("/")
     public String init(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
@@ -60,6 +63,7 @@ public class InitController {
         if (bindingResult.hasErrors()) {
             return "member/profile";
         }
+
         log.info(memberCreateDto.toString(), memberCreateDto.getAge());
         memberService.join(memberCreateDto,files,principalDetails);
         return "redirect:/love/main";

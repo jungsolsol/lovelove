@@ -50,4 +50,11 @@ Images {
         this.id = id;
     }
 
+
+    @Builder
+    public Images(Long id, String imgName, String imgUrl) {
+        this.id = id;
+        this.imgName = imgName;
+        this.imgUrl = imgUrl;
+    }
 }
