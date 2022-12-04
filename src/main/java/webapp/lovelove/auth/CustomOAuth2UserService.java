@@ -28,10 +28,15 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-//        OAuth2User auth2User = super.loadUser(userRequest);
-        OAuth2User auth2User= (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // (1)
+        OAuth2User auth2User = super.loadUser(userRequest);
+//        OAuth2User auth2User= (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // (1)
+        String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        String provider = userRequest.getClientRegistration().getClientId();
+//        OAuth2UserInfo userInfo = UserInfoFactory.create(provider, oAuth2User.getAttributes())
+//                .orElseThrow(() -> new AppAuthenticationException(AppAuthExceptionCode.INVALID_OAUTH2_PROVIDER));
+
+
+//        String provider = userRequest.getClientRegistration().getClientId();
         String providerId = auth2User.getAttribute("sub");
         String name = auth2User.getAttribute("name");
         String email = auth2User.getAttribute("email");

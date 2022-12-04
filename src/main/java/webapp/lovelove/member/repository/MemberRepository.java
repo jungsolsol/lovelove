@@ -14,6 +14,8 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long>, CustomMemberRepository {
 
+    Optional<Member> findById(Long Id);
+    boolean existsById(Long id);
     Member findByEmail(String email);
 
     boolean existsByMemberProfile_Nickname(String nickname);

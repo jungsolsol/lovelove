@@ -234,4 +234,14 @@ public class MemberService {
     public Double setfindMemberDistance(Double dt) {
         return dt;
     }
+
+    public boolean existsById(Long Id) { return memberRepository.existsById(Id); }
+
+
+    public Member findById(Long id){
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Member not exist. id = " + id));
+    }
+
+
 }

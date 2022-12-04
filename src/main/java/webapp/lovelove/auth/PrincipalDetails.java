@@ -50,5 +50,11 @@ public class PrincipalDetails implements OAuth2User {
         return sub;
     }
 
+    public Long getMemberId() {return member.getId();}
+
+    public static PrincipalDetails general(Member member) {
+        return new PrincipalDetails(member,null);
+    }
+
 
 }
