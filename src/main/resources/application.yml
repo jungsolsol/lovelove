@@ -44,12 +44,10 @@ thymeleaf:
   mvc:
     static-path-pattern: "/static/**"
 
-app:
-  auth:
-    jwt:
-      header: Authorization
-      expiration-time-millis:
-        access-token: 12000000         # 60초 : 60000, # 60분 : 3600000, # 1일 : 86400000, # 7일 : 604800000 ms 단위
-        refresh-token: 604800000
-      secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-      token-validity-in-seconds: 86400	# 초
+jwt:
+  header: Authorization
+    expiration-time-millis:
+      access-token: 12000000         # 60초 : 60000, # 60분 : 3600000, # 1일 : 86400000, # 7일 : 604800000 ms 단위
+      refresh-token: 604800000
+    secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+    token-validity-in-seconds: 86400	# 초

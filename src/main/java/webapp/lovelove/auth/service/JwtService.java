@@ -29,7 +29,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtService {
 
-    @Value("${app.auth.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
     private final Map<String,String> repository = new HashMap<>();

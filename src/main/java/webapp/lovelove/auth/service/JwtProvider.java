@@ -13,13 +13,13 @@ import java.util.Date;
 
 public class JwtProvider {
 
-    @Value("${app.auth.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${app.auth.jwt.expiration-time-millis.access-token}")
+    @Value("${jwt.expiration-time-millis.access-token}")
     private long accessExpirationTimeMillis;
 
-    @Value("${app.auth.jwt.expiration-time-millis.refresh-token}")
+    @Value("${jwt.expiration-time-millis.refresh-token}")
     private long refreshExpirationTimeMillis;
 
     public String createAccessToken(Long id){
