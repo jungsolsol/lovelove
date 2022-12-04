@@ -7,10 +7,7 @@
     }
 </style>
 <head>
-    <div class="map" id="map" style="width:auto;height:600px;padding-top: 10px;">
-        <script th:inline="javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e555062ab88e1ebe1463187ab4a9bcb9&libraries=services,cluster"></script>
-        <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    </div>
+    <script th:inline="javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e555062ab88e1ebe1463187ab4a9bcb9&libraries=services,cluster"></script>
 
     <link href="/css/main.css" rel="stylesheet" />
     <meta charset="utf-8">
@@ -25,12 +22,16 @@
         </form>
     </div>
     </h3>
+
+
     <a th:href="@{/love/message/{nick}/received(nick=${nick})}">메시지함</a>
     <a th:href="@{/love/main/{nick}(nick=${nick})}">내정보</a>
     <a th:id="likedButton" th:href="@{/love/main/heart}">나를 좋아하는사람들</a>
 </head>
 <body style="text-align: center">
-
+<div class="map" id="map" style="width:auto;height:600px;padding-top: 10px;">
+    <script th:inline="javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+</div>
 </body>
 
 <script th:inline="javascript" >
