@@ -20,7 +20,7 @@
         <a class="login" th:if="${not #strings.isEmpty(member)}"  href="/logout" role="button"
         th:text="|${member}님 환영합니다!|" style="text-align: left; text-decoration: none";>
         </a>
-        <a th:if="${#strings.isEmpty(member)}" href="/login/oauth2/code/google" class="btn btn-success active" role="button" style="text-decoration: none"
+        <a th:if="${#strings.isEmpty(member)}" href="/oauth2/authorization/google" class="btn btn-success active" role="button" style="text-decoration: none"
         >구글아이디로 로그인하기</a>
         </div>
 

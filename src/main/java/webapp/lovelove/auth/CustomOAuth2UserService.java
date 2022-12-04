@@ -28,7 +28,11 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User auth2User = super.loadUser(userRequest);
+        OAuth2UserService delegate = new DefaultOAuth2UserService();
+
+        OAuth2User oAuth2User = delegate.loadUser(userRequest); // OAuth 서비스(kakao, google, naver)에서 가져온 유저 정보를 담고있음
+
+//        OAuth2User auth2User = super.loadUser(userRequest);
 //        OAuth2User auth2User= (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // (1)
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
@@ -37,9 +41,9 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
 
 
 //        String provider = userRequest.getClientRegistration().getClientId();
-        String providerId = auth2User.getAttribute("sub");
-        String name = auth2User.getAttribute("name");
-        String email = auth2User.getAttribute("email");
+        String providerId = oAuth2User.getAttribute("sub");
+        String name = oAuth2User.getAttribute("name");
+        String email = oAuth2User.getAttribute("email");
         String role = "ROLE_USER";
         Member memberEntity = memberRepository.findByEmail(email);
 
@@ -54,6 +58,6 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
             memberRepository.save(createMember);
 
         }
-        return new PrincipalDetails(memberEntity, auth2User.getAttributes());
+        return new PrincipalDetails(memberEntity, oAuth2User.getAttributes());
     }
 }
