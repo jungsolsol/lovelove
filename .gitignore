@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 images/**
 
+
 application.yml
 ### STS ###
 .apt_generated
