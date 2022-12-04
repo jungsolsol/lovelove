@@ -43,15 +43,3 @@ thymeleaf:
   cache: false
   mvc:
     static-path-pattern: "/static/**"
-
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIASU6RXFFGFDWEAXVD
-      secretKey: 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
-    s3:
-      bucket: loveplace-deploy
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
