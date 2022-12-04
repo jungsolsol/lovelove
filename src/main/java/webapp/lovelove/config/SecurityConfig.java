@@ -53,7 +53,7 @@ public class SecurityConfig {
 //                        .anyRequest().authenticated()
 //                )
                 .oauth2Login()
-                .defaultSuccessUrl("/oauth/loginInfo", true) //OAuth2 성공시 redirect
+//                .defaultSuccessUrl("/oauth/loginInfo", true) //OAuth2 성공시 redirect
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 //                .and()
