@@ -54,7 +54,7 @@ public class InitController {
         model.addAttribute("member", principalDetails.getAttribute("name"));
         model.addAttribute("memberCreateDto", new MemberCreateDto());
 
-        if (!isaBoolean(principalDetails)) {
+        if (isaBoolean(principalDetails)) {
             return "member/profile";
         } else {
             return "redirect:/love/main";
