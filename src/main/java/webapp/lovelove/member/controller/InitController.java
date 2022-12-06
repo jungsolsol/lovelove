@@ -38,6 +38,7 @@ public class InitController {
                 model.addAttribute(("member"), principalDetails.getAttribute("name"));
             }
         } catch (NullPointerException e) {
+
         }
         return "page/init";
     }
