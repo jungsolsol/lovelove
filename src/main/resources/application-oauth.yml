@@ -1,0 +1,11 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 372992379675-71mfmso0ak61n17effmcg0mnj96ovp7p.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+            redirect-uri: "https://ec2-3-36-237-156.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google"
+
