@@ -250,4 +250,15 @@ public class MemberService {
     }
 
 
+    public boolean existMemberProfileByEmailAndName(String email, String name) {
+
+        Optional<Member> findMember = memberRepository.findByEmailAndName(email, name);
+
+        if (findMember.get().getMemberProfile().getNickname().isEmpty()) {
+            return true;
+        }
+        else
+            return false;
+    }
+
 }

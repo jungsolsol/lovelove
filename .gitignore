@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 images/**
 
-src/main/resources/application.yml
+**/application.yml
 ### STS ###
 .apt_generated
 .classpath

@@ -95,6 +95,9 @@ public class MainController {
             objects.add("Clon", findMemberDto.getPosition().getLon().toString());
             objects.add("images", findMemberDto.getImagesUrl());
             objects.add("myname", principalDetails.getAttribute("name"));
+
+            //하트저장소에서 하트보낸사람 찾아서 지도에 맵핑하기위함
+            List<Heart> allBySender = heartRepository.findAllBySender(memberRepository.findByEmail(findMemberDto.getNickname()));
         }
 
         System.out.println(objects);

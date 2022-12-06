@@ -52,7 +52,16 @@ public class InitController {
     public String createProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         model.addAttribute("member", principalDetails.getAttribute("name"));
         model.addAttribute("memberCreateDto", new MemberCreateDto());
-        return "member/profile";
+
+        if (!isaBoolean(principalDetails)) {
+            return "member/profile";
+        } else {
+            return "redirect:/love/main";
+        }
+    }
+
+    private boolean isaBoolean(PrincipalDetails principalDetails) {
+        return memberService.existMemberProfileByEmailAndName(principalDetails.getAttribute("email"), principalDetails.getAttribute("name"));
     }
 
     @PostMapping(value = "/member/profile", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})

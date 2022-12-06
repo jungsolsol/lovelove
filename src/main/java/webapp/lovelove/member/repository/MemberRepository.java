@@ -18,6 +18,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, CustomMem
     boolean existsById(Long id);
     Member findByEmail(String email);
 
+    Optional<Member> findByEmailAndName(String email, String name);
+
     boolean existsByMemberProfile_Nickname(String nickname);
 
 
