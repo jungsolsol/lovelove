@@ -127,4 +127,5 @@ public class MainController {
         memberRepository.saveAndFlush(m);
         return new RedirectView("/love/main");
     }
+
 }

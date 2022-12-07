@@ -19,6 +19,13 @@
                    minlength="3" maxlength="3" size="12" style="text-align: left" th:method="post">
             <button type="submit" id="distance">변경</button>
         </form>
+
+        <div style="text-align: right">
+            <a href="/"  class="home" role="button" style="color: lightcoral; text-decoration: none; font-size: large">홈으로</a>
+            <a th:if="${not #strings.isEmpty(member)}" href="/member/delete" class="delete" role="button"
+               onclick="alert('회원탈퇴가 완료되었습니다')"
+               style="color: grey; text-decoration: none; font-size: large">회원탈퇴</a>
+        </div>
     </div>
     </h3>
 

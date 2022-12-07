@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import webapp.lovelove.auth.PrincipalDetails;
+import webapp.lovelove.main.domain.Message;
 import webapp.lovelove.main.domain.findMemberDto;
 import webapp.lovelove.main.dto.ProfileDto;
 import webapp.lovelove.main.repository.HeartRepository;
+import webapp.lovelove.main.repository.MessageRepository;
 import webapp.lovelove.member.domain.Heart;
 import webapp.lovelove.member.domain.Member;
 import webapp.lovelove.member.domain.MemberPosition;
@@ -22,6 +24,7 @@ import webapp.lovelove.member.repository.MemberRepository;
 import webapp.lovelove.member.util.Direction;
 import webapp.lovelove.member.util.GeometryUtil;
 import javax.persistence.EntityManager;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -37,6 +40,8 @@ public class MemberService {
     private final ImagesRepository imagesRepository;
 
     private final HeartRepository heartRepository;
+
+    private final MessageRepository messageRepository;
 
     private final EntityManager em;
 
@@ -253,12 +258,37 @@ public class MemberService {
     public boolean existMemberProfileByEmailAndName(String email, String name) {
 
         Optional<Member> findMember = memberRepository.findByEmailAndName(email, name);
-
-        if (findMember.get().getMemberProfile().getNickname().isEmpty()) {
+        if (findMember.get().getMemberProfile().getNickname() == null) {
             return true;
         }
         else
             return false;
     }
 
+    public void secessionMember(Long id) {
+        Member findMember = memberRepository.findById(id).get();
+        try {
+            List<Message> findMessages = findMember.getMessage();
+            List<Heart> findHearts = findMember.getHeart();
+
+            List<Message> allBySender = messageRepository.findAllBySender(findMember);
+            allBySender.forEach(s -> messageRepository.deleteAll());
+            heartRepository.findAllBySender(findMember).forEach(s-> heartRepository.deleteAll());
+
+        }
+
+        finally {
+
+            imagesRepository.findById(id).ifPresentOrElse(
+                    message -> imagesRepository.deleteById(id), () -> System.out.println("이미지값이 없음"));
+
+            memberRepository.findById(id).ifPresent(
+                    member -> memberRepository.deleteById(id)
+            );
+        }
+
+
+
+
+    }
 }

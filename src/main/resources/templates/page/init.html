@@ -30,8 +30,13 @@
 </div> <!-- /container -->
     <div  style="text-align: justify" >
     <a th:if="${not #strings.isEmpty(member)}" href="/member/profile"  class="btn active" role="button" style="color: darksalmon; text-decoration: none;  font-size: x-large" >럽플 시작하기</a>
-        
     </div>
+
+<div style="text-align: right">
+    <a th:if="${not #strings.isEmpty(member)}" href="/member/delete" class="delete" role="button"
+       onclick="alert('회원탈퇴가 완료되었습니다')"
+       style="color: grey; text-decoration: none; font-size: large">회원탈퇴</a>
+</div>
 <!--    <div>-->
 <!--&lt;!&ndash;    <a th:class="toggleBtn"><i class="fa-solid fa-bars"></i></a>&ndash;&gt;-->
 <!--    </div>-->

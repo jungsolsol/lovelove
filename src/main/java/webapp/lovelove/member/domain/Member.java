@@ -61,11 +61,11 @@ public class Member {
 
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "receiver")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "receiver",cascade = CascadeType.ALL)
     private List<Heart> heart = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Message> message = new ArrayList<>();
 
 
