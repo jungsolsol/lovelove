@@ -61,21 +61,4 @@ public class Message {
         this.sender = sender;
     }
 
-
-    public void deleteBySender() {
-        this.deletedBySender = true;
-    }
-
-    public void deleteByReceiver() {
-        this.deletedByReceiver = true;
-    }
-    public boolean isDeletedByReceiver() {
-        this.deletedByReceiver = true;
-        return true;
-    }
-
-    public boolean isDeletedBySender() {
-        this.deletedByReceiver = true;
-        return true;
-    }
 }

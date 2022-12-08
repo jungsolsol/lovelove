@@ -45,24 +45,31 @@ public class MemberService {
     private final S3Service s3Service;
     private final EntityManager em;
 
-//    public void join(MemberCreateDto fileDto, List<MultipartFile> fileList, PrincipalDetails principalDetails) {
+    /**
+     * 회원 가입
+     */
     public void join(MemberCreateDto fileDto, List<MultipartFile> file, PrincipalDetails principalDetails) {
 
         Member member = memberRepository.findByEmail(principalDetails.getAttribute("email"));
         MemberProfile mappedProfile = modelMapper.map(fileDto, MemberProfile.class);
         if (existsByMemberProfile_Nickname(mappedProfile.getNickname()) == true) {
-            //ToDo List
-            //CustomError 처리
             throw new IllegalStateException("이미 존재하는 닉네임입니다");
         }
         memberRepository.save(member);
         member.updateProfile(mappedProfile);
 
 
+        /**
+         * S3에 이미지 업로드 처리
+         */
+
         try {
             List<Images> images = s3Service.parseFileInfo(member, file);
             if (images.isEmpty()) {
-                //성별 남자일시 기본이미지
+                /**
+                 * 이미지를 안넣었을때 기본이미지 처리
+                 * 성별별 기본이미지 처리
+                 */
                 if (fileDto.getSex() == Sex.남자) {
                     Images img = new Images(member.getId(), member, "남자기본", "photos/20221020/man.jpg", null, "man", 111);
                     List<Images> imageBeans = new ArrayList<>();
@@ -82,7 +89,6 @@ public class MemberService {
             } else {
                 List<Images> imageBeans = new ArrayList<>();
                 for (Images image : images) {
-//                    image.s(member.getId());
                     /**
                      * 추가
                      */
@@ -100,74 +106,24 @@ public class MemberService {
             throw new RuntimeException(e);
         }
 
-/**
- *
- *
- */
-//        try {
-//            List<Images> images = fileHandler.parseFileInfo(member, fileList);
-//
-//            //ToDo List
-//            //기본이미지 설정
-//            if (images.isEmpty()) {
-//                //성별 남자일시 기본이미지
-//                if (fileDto.getSex() == Sex.남자) {
-//                    Images img = new Images(member.getId(), member, "남자기본", "photos/20221020/man.jpg", null, "man", 111);
-//                    List<Images> imageBeans = new ArrayList<>();
-//                    imageBeans.add(imagesRepository.save(img));
-//                    mappedProfile.setImagesUrl(imageBeans);
-//                    member.updateProfile(mappedProfile);
-//                    memberRepository.save(member);
-//                } else {
-//
-//                    Images img = new Images(member.getId(), member, "여자기본", "photos/20221020/woman.jpg", null, "woman", 111);
-//                    List<Images> imageBeans = new ArrayList<>();
-//                    imageBeans.add(imagesRepository.save(img));
-//                    mappedProfile.setImagesUrl(imageBeans);
-//                    member.updateProfile(mappedProfile);
-//                    memberRepository.save(member);
-//                }
-//            } else {
-//                List<Images> imageBeans = new ArrayList<>();
-//                for (Images image : images) {
-////                    image.s(member.getId());
-//                    /**
-//                     * 추가
-//                     */
-//                    imageBeans.add(fileHandler.savePost(image));
-//
-//                    imageBeans.add(imagesRepository.save(image));
-//                }
-//
-//
-//                mappedProfile.setImagesUrl(imageBeans);
-//                member.updateProfile(mappedProfile);
-//                memberRepository.save(member);
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-
-/**
- *
- *
- */
-
     }
 
+    /**
+     * 닉네임 중복 검사
+     */
     public boolean existsByMemberProfile_Nickname(String nickname) {
         return memberRepository.existsByMemberProfile_Nickname(nickname);
     }
 
 
+    /**
+     * DB에 현재 내위치를 저장하는 메소드
+     */
     public void setMemberPosition(Double lat, Double lon,PrincipalDetails principalDetails) {
         Member findMember = memberRepository.findByEmail(principalDetails.getAttribute("email"));
         MemberPosition position = MemberPosition.builder().lat(lat).lon(lon).build();
-//        Poin point = new Point(position.getLat(), position.getLon());
-
         Double lat1 = position.getLat();
         Double lon1 = position.getLon();
-//        memberRepository.savePoint();
         Point point = GeometryUtil.createPoint(lat, lon);
         findMember.updatePosition(position);
         findMember.updatePoint(point);
@@ -175,6 +131,13 @@ public class MemberService {
     }
 
 
+    /**
+     * @param lat 현재 내 위도
+     * @param lon 현재 내 경도
+     * @param distance 주변 거리
+     * @param principalDetails securitycontext에 있는 내 정보
+     * @return 현재 내 위도,경도를 통해 찾아낸 주변 이성 데이터
+     */
     public List<findMemberDto> findWomanOrManByPosition(Double lat, Double lon, Double distance,PrincipalDetails principalDetails) {
 
 
@@ -193,23 +156,28 @@ public class MemberService {
         Member member = memberRepository.findByEmail(principalDetails.getAttribute("email"));
         List<findMemberDto> findMemberDtoList = new ArrayList<>();
         Optional.of(member).ifPresentOrElse(m -> {
-
-            System.out.println(m.getMemberProfile().getSex());
             //성별과 거리에 따른 주변사람 탐색
             findAllMemberByMyGenderAndPosition(nearByMemberPostion, findMemberDtoList ,m);
-                }, () -> {
+                }, () ->
+                {
+
             System.out.println("GenderSelectionError");
                 }
 
         );
 
 
-//        findMemberDto findDto =  modelMapper.map(nearByMemberPostion, findMemberDto.class);
 
         return findMemberDtoList;
 
     }
 
+    /**
+     * 남자는 여자만 여자는 남자만 보이게 하는 메소드
+     * @param nearByMemberPostion
+     * @param findMemberDtoList
+     * @param me
+     */
     private void findAllMemberByMyGenderAndPosition(List<Member> nearByMemberPostion, List<findMemberDto> findMemberDtoList, Member me
     )
 
@@ -217,7 +185,6 @@ public class MemberService {
         try {
             for (Member member : nearByMemberPostion) {
 
-                //여자는 남자만 남자는 여자만 보이게
                 if (member.getMemberProfile().getSex() != me.getMemberProfile().getSex()) {
                     Images images = imagesRepository.findById(member.getId()).orElseThrow(() -> new IllegalStateException("member.getId())"));
                     String imgUrl = images.getImgUrl();
@@ -250,6 +217,11 @@ public class MemberService {
         }
     }
 
+    /**
+     * 좋아요 버튼 클릭시
+     * 좋아요가 이미 눌러져있으면
+     * 좋아요를 삭제
+     */
     public HashMap isAlreadyAddLike(String nick, String email) {
         Member sentMember = memberRepository.findByEmail(email);
         List<Heart> allByMember = heartRepository.findAllByMember(sentMember);
@@ -266,6 +238,11 @@ public class MemberService {
 
         return map;
     }
+
+    /**
+     * 좋아요 기능구현
+     *
+     */
     public void memberLike(String nick, String email) {
         Member member = memberRepository.findByNickname(nick);
         Member sentMember = memberRepository.findByEmail(email);
@@ -284,24 +261,17 @@ public class MemberService {
         );
     }
 
+    /**
+     * 프로필 수정
+     * @param member
+     * @param profileDto
+     */
+
     public void updateProfile(Member member, ProfileDto profileDto) {
         member.editProfile(profileDto);
         em.persist(member);
         em.flush();
         em.clear();
-    }
-
-
-    public Double setfindMemberDistance(Double dt) {
-        return dt;
-    }
-
-    public boolean existsById(Long Id) { return memberRepository.existsById(Id); }
-
-
-    public Member findById(Long id){
-        return memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Member not exist. id = " + id));
     }
 
 
@@ -351,4 +321,5 @@ public class MemberService {
 
 
     }
+
 }

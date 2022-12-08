@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>프로필</title>
+</head>
+<body>
+<div class="container"style="display: inline-block">
+    <h2 th:text="|${nick}님의 정보|"></h2>
+    <div class="inform">
+        <h3 th:text="|닉네임 : ${nick}|"></h3>
+                <img th:src="@{/love/} + ${profile?.images}" width="230">
+    </div>
+    <div class="form" th:text="|음주여부 = ${profile?.haveAlcohol}|"></div>
+    <div class="form" th:text="|흡연여부 = ${profile?.haveSmoke}|"></div>
+    <div class="form" th:text="|종교 = ${profile?.haveReligion}|"></div>
+    <div class="form"  th:text="|소개 = ${profile?.information}|"></div>
+
+    <div class="form">
+        <a th:href="@{/love/message/{nick}(nick=${nick})}">메시지 보내기</a>
+        <a th:href="@{/love/main}">메인화면</a>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    body {
+        text-align: center;
+        margin: 0;
+    }
+    .container {
+        font-size: 15px;
+        font-weight: bold;
+        width: 500px;
+        height: 500px;
+        border-top: 1px solid #f1f3f6;
+        border-bottom: 1px solid #f1f3f6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .form {
+        width: 400px;
+        padding: 5px;
+        float: left;
+        margin: 0 10px;
+        text-align: left;
+
+    }
+    a {
+        margin-left: -3px;
+        text-decoration: none;
+        color: black;
+        font-size: 1.2em;
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    a:hover {
+        background-color: peachpuff;
+    }
+</style>

@@ -107,19 +107,30 @@
                     var intro = new Array();
                     var nickname = new Array();
                     var img = new Array();
-                    // var liked = new Array();
+                    var heart = new Array();
 
 
-                    sessionStorage.setItem(d.nickname, "null");
+                    console.log(d.heart);
+
+                    /**
+                     * 좋아요 눌러놓은 사람은 꽉찬 하트로 화면에 표시
+                     */
+                    for (var i = 0; i < d.heart.length; i ++) {
+
+                        if (d.nickname[i].includes(d.heart[i])) {
+                            sessionStorage.setItem(d.nickname[i], "fill");
+                        } else {
+                            sessionStorage.setItem(d.nickname[i], "empty");
+
+                        }
+                    }
 
                     console.log(d.myname);
                     for (var i = 0; i < d.name.length; i++) {
                         positionList.push(new kakao.maps.LatLng(d.Clat[i], d.Clon[i]));
 
 
-                        // liked.push(d.liked[i]);
                         contents.push(d.name[i]);
-
                         img.push(d.images[i]);
                         intro.push(d.introduce[i]);
                         nickname.push(d.nickname[i]);
@@ -178,7 +189,7 @@
                             placeImg.className = "target-img";
                             var imgspath = data.imgs;
                             placeImg.setAttribute("src", imgspath);
-                            placeImg.setAttribute("width", "45");
+                            placeImg.setAttribute("width", "65");
                             var placeIntro = document.createElement("div");
                             placeIntro.innerHTML = "소개 : " + data.introduce;
                             var placeNickname = document.createElement("div");
@@ -208,9 +219,14 @@
 
 
                             var placeDislike = document.createElement("button");
-                            placeDislike.innerHTML = "나가기";
+                            placeDislike.innerHTML = "프로필확인하기";
                             placeDislike.className = "place-dislike";
-                            placeDislike.onclick = customOverlay.setMap(null);
+                            placeDislike.addEventListener("click", function () {
+                                    var nick = data.nick;
+                                    location.href = "/love/main/profile/" + nick;
+                                }
+                            );
+                            // placeDislike.onclick = customOverlay.setMap(null);
 
 
                             placeContent.append(placeHead, placeBody);

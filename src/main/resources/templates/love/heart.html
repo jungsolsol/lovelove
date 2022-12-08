@@ -41,7 +41,11 @@
     </thead>
     <tbody>
     <tr th:each="list : ${sendHeart}">
-        <td th:text="${list.receiverNick}"></td>
+
+        <td class="td_click"
+            th:text="${list.receiverNick}"
+            th:nick="${list.receiverNick}"
+            th:onclick="showDetailProfile(this.getAttribute('nick'))"></td>
         <td><img th:src="@{/love/} + ${list.receiverImages}" width="70"></td>
         <td th:text="${list.receiverInfo}"></td>
         <td th:text="${list.sendHeartTime}"></td>
@@ -53,6 +57,13 @@
 </div>
 </body>
 </html>
+<script th:inline="javascript">
+    function showDetailProfile(nick)
+    {
+        location.href = "profile/"+ nick
+
+    };
+</script>
 <style>
     table {
         margin: auto;
@@ -63,6 +74,11 @@
         border: 1px solid peachpuff;
 
     }
+    td.td_click:hover {
+        background-color: peachpuff;
+
+    }
+
     a {
         margin-left: -3px;
         text-decoration: none;

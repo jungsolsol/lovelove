@@ -26,13 +26,6 @@ import webapp.lovelove.auth.CustomOAuth2UserService;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class SecurityConfig {
 
-
-//    @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
-//    private String clientId;
-//
-//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
-//    private String clientSecret;
-
     private final CustomOAuth2UserService customOAuth2UserService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,16 +42,10 @@ public class SecurityConfig {
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and()
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .anyRequest().authenticated()
-//                )
                 .oauth2Login()
 //                .defaultSuccessUrl("/oauth/loginInfo", true) //OAuth2 성공시 redirect
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
-//                .and()
-//                .successHandler(oAuth2SuccessHandler)
-//                .failureHandler(new OAuth2FailureHandler());
 
         return http.build();
     }

@@ -31,23 +31,12 @@ CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserSe
         OAuth2UserService delegate = new DefaultOAuth2UserService();
 
         OAuth2User oAuth2User = delegate.loadUser(userRequest); // OAuth 서비스(kakao, google, naver)에서 가져온 유저 정보를 담고있음
-
-//        OAuth2User auth2User = super.loadUser(userRequest);
-//        OAuth2User auth2User= (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // (1)
         String provider = userRequest.getClientRegistration().getRegistrationId();
-
-//        OAuth2UserInfo userInfo = UserInfoFactory.create(provider, oAuth2User.getAttributes())
-//                .orElseThrow(() -> new AppAuthenticationException(AppAuthExceptionCode.INVALID_OAUTH2_PROVIDER));
-
-
-//        String provider = userRequest.getClientRegistration().getClientId();
         String providerId = oAuth2User.getAttribute("sub");
         String name = oAuth2User.getAttribute("name");
         String email = oAuth2User.getAttribute("email");
         String role = "ROLE_USER";
         Member memberEntity = memberRepository.findByEmail(email);
-
-
 
 
         if (memberEntity == null) {

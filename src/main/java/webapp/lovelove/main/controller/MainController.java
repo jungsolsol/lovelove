@@ -84,6 +84,15 @@ public class MainController {
         }
     }
 
+
+    /**
+     * HttpServletResponse에 json데이터를 파싱
+     * @param principalDetails
+     * @param rs
+     * @param find
+     * @throws InterruptedException
+     * @throws IOException
+     */
     private void parseJson(PrincipalDetails principalDetails, HttpServletResponse rs, List<findMemberDto> find) throws InterruptedException, IOException {
         JSONObject jso = new JSONObject();
         MultiValueMap<String, String> objects = new LinkedMultiValueMap<>();
@@ -96,11 +105,12 @@ public class MainController {
             objects.add("images", findMemberDto.getImagesUrl());
             objects.add("myname", principalDetails.getAttribute("name"));
 
-            //하트저장소에서 하트보낸사람 찾아서 지도에 맵핑하기위함
-            List<Heart> allBySender = heartRepository.findAllBySender(memberRepository.findByEmail(findMemberDto.getNickname()));
+            List<Heart> allBySender = heartRepository.findAllBySender(memberRepository.findByNickname(findMemberDto.getNickname()));
+            allBySender.forEach(heart -> objects.add("heart", heart.getReceiver().getMemberProfile().getNickname()));
+
         }
 
-        System.out.println(objects);
+
         jso.put("name", objects.get("name"));
         jso.put("Clat", objects.get("Clat"));
         jso.put("Clon", objects.get("Clon"));
@@ -108,15 +118,14 @@ public class MainController {
         jso.put("nickname", objects.get("nickname"));
         jso.put("images", objects.get("images"));
         jso.put("myname", objects.get("myname"));
+        jso.put("heart", objects.get("heart"));
+
         Thread.sleep(100);
 
         rs.setContentType("text/html;charset=utf-8");
         PrintWriter out = rs.getWriter();
         out.print(jso.toString());
     }
-
-
-
 
     @PostMapping("love/main/distance")
     public RedirectView settingDistance(@RequestParam("distance") String distance, @AuthenticationPrincipal PrincipalDetails principalDetails) {

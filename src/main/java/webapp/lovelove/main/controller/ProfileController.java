@@ -24,6 +24,12 @@ public class ProfileController {
     private final HeartService heartService;
     private final MemberService memberService;
 
+    @GetMapping("love/main/profile/{nick}")
+    public String detailProfile(@PathVariable("nick") String nick, Model model) {
+        ProfileDto detailInfo = ProfileDto.toDto(memberRepository.findByNickname(nick));
+        model.addAttribute("profile", detailInfo);
+        return "love/moreProfile";
+    }
     @GetMapping("love/main/{nick}")
     public String profile(@PathVariable("nick") String nick, @AuthenticationPrincipal PrincipalDetails principalDetails
             , Model model) {
@@ -35,7 +41,9 @@ public class ProfileController {
         return "love/profile";
     }
 
-    //수정 폼 조회
+    /**
+     *    수정 폼 조회
+     */
     @GetMapping("love/main/{nick}/edit")
     public String editProfile(@PathVariable("nick") String nick, Model model) {
         Member member = memberRepository.findByNickname(nick);
@@ -45,7 +53,9 @@ public class ProfileController {
     }
 
 
-    //수정
+    /**
+     * 수정 Post
+     */
     @PostMapping("love/main/{nick}/edit")
     public RedirectView editProfilePut(@PathVariable("nick") String nick
             , RedirectAttributes attributes, @Valid @ModelAttribute  ProfileDto profileDto, BindingResult bindingResult) {
