@@ -116,16 +116,18 @@
                      * 좋아요 눌러놓은 사람은 꽉찬 하트로 화면에 표시
                      */
                     for (var i = 0; i < d.heart.length; i ++) {
+                        if (d.heart.includes(d.nickname[i])) {
 
-                        if (d.nickname[i].includes(d.heart[i])) {
                             sessionStorage.setItem(d.nickname[i], "fill");
                         } else {
+                            console.log(d.nickname[i])
+
                             sessionStorage.setItem(d.nickname[i], "empty");
 
                         }
                     }
 
-                    console.log(d.myname);
+                    console.log(sessionStorage)
                     for (var i = 0; i < d.name.length; i++) {
                         positionList.push(new kakao.maps.LatLng(d.Clat[i], d.Clon[i]));
 
