@@ -13,7 +13,8 @@
     <h2 th:text="|${nick}님의 정보|"></h2>
     <div class="inform">
     <h3 th:text="|닉네임 : ${nick}|"></h3>
-        <img th:src="@{/love/} + ${profile?.images}" width="230">
+<!--        <img th:src="@{/love/} + ${profile?.images}" width="230">-->
+        <img th:src="${profile?.images}" width="230">
     </div>
     <div class="form" th:text="|음주여부 = ${profile?.haveAlcohol}|"></div>
     <div class="form" th:text="|흡연여부 = ${profile?.haveSmoke}|"></div>

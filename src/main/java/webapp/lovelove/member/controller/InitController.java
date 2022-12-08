@@ -81,8 +81,10 @@ public class InitController {
 
         for (MultipartFile file : files) {
             s3Service.upload(file);
+
         }
         memberService.join(memberCreateDto, files, principalDetails);
+
         return "redirect:/love/main";
     }
 

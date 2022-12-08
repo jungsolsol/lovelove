@@ -42,10 +42,11 @@ public class MemberService {
     private final HeartRepository heartRepository;
 
     private final MessageRepository messageRepository;
-
+    private final S3Service s3Service;
     private final EntityManager em;
 
-    public void join(MemberCreateDto fileDto, List<MultipartFile> fileList, PrincipalDetails principalDetails) {
+//    public void join(MemberCreateDto fileDto, List<MultipartFile> fileList, PrincipalDetails principalDetails) {
+    public void join(MemberCreateDto fileDto, List<MultipartFile> file, PrincipalDetails principalDetails) {
 
         Member member = memberRepository.findByEmail(principalDetails.getAttribute("email"));
         MemberProfile mappedProfile = modelMapper.map(fileDto, MemberProfile.class);
@@ -59,10 +60,7 @@ public class MemberService {
 
 
         try {
-            List<Images> images = fileHandler.parseFileInfo(member, fileList);
-
-            //ToDo List
-            //기본이미지 설정
+            List<Images> images = s3Service.parseFileInfo(member, file);
             if (images.isEmpty()) {
                 //성별 남자일시 기본이미지
                 if (fileDto.getSex() == Sex.남자) {
@@ -101,7 +99,59 @@ public class MemberService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-//        duplicatedNickNameCheck(member.getMemberProfile().getNickname());
+
+/**
+ *
+ *
+ */
+//        try {
+//            List<Images> images = fileHandler.parseFileInfo(member, fileList);
+//
+//            //ToDo List
+//            //기본이미지 설정
+//            if (images.isEmpty()) {
+//                //성별 남자일시 기본이미지
+//                if (fileDto.getSex() == Sex.남자) {
+//                    Images img = new Images(member.getId(), member, "남자기본", "photos/20221020/man.jpg", null, "man", 111);
+//                    List<Images> imageBeans = new ArrayList<>();
+//                    imageBeans.add(imagesRepository.save(img));
+//                    mappedProfile.setImagesUrl(imageBeans);
+//                    member.updateProfile(mappedProfile);
+//                    memberRepository.save(member);
+//                } else {
+//
+//                    Images img = new Images(member.getId(), member, "여자기본", "photos/20221020/woman.jpg", null, "woman", 111);
+//                    List<Images> imageBeans = new ArrayList<>();
+//                    imageBeans.add(imagesRepository.save(img));
+//                    mappedProfile.setImagesUrl(imageBeans);
+//                    member.updateProfile(mappedProfile);
+//                    memberRepository.save(member);
+//                }
+//            } else {
+//                List<Images> imageBeans = new ArrayList<>();
+//                for (Images image : images) {
+////                    image.s(member.getId());
+//                    /**
+//                     * 추가
+//                     */
+//                    imageBeans.add(fileHandler.savePost(image));
+//
+//                    imageBeans.add(imagesRepository.save(image));
+//                }
+//
+//
+//                mappedProfile.setImagesUrl(imageBeans);
+//                member.updateProfile(mappedProfile);
+//                memberRepository.save(member);
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+
+/**
+ *
+ *
+ */
 
     }
 
@@ -255,6 +305,11 @@ public class MemberService {
     }
 
 
+    /**
+     *
+     * 회원가입이 안되어있을시에는 Member/profile로 리턴해서 회원가입 작성
+     * 이미 회원가입되어있을시엔 love/main 으로 리다이렉트
+     */
     public boolean existMemberProfileByEmailAndName(String email, String name) {
 
         Optional<Member> findMember = memberRepository.findByEmailAndName(email, name);
@@ -265,6 +320,11 @@ public class MemberService {
             return false;
     }
 
+
+    /**
+     *
+     * 멤버 회원탈퇴
+     */
     public void secessionMember(Long id) {
         Member findMember = memberRepository.findById(id).get();
         try {
