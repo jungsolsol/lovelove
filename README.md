@@ -21,3 +21,6 @@ API/라이브러리 GoogleLogin API, KakaoMap API, Thymeleaf
 CI/CD Git, GitAction, CodeDeploy 
 
 보안 SpringSecurity, SSL
+
+프로젝트 아키텍쳐
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/06c7ad93-3bbd-4a53-a8dd-21eb2bc0089f/Untitled.png)
