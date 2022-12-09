@@ -23,4 +23,4 @@ CI/CD Git, GitAction, CodeDeploy
 보안 SpringSecurity, SSL
 
 프로젝트 아키텍쳐
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/06c7ad93-3bbd-4a53-a8dd-21eb2bc0089f/Untitled.png)
+![image](https://user-images.githubusercontent.com/88434960/206699983-5a77f4b5-07bc-42c2-971e-5bec5ac5ab13.png)
