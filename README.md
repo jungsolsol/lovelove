@@ -22,11 +22,15 @@
 
 **DB**
 
-<img src="https://img.shields.io/badge/mysql-F8DC75?style=for-the-badge&logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/aws rds-F8DC75?style=for-the-badge&logo=awsrds&logoColor=white"> Mysql, AWS RDS
+<img src="https://img.shields.io/badge/mysql-1572B6?style=for-the-badge&logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/amazonaws rds-E34F26?style=for-the-badge&logo=amazonawsrds&logoColor=white">
 
-**IDE** IntelliJ
+**IDE** 
 
-**API/라이브러리** GoogleLogin API, KakaoMap API, Thymeleaf
+<img src="https://img.shields.io/badge/intellij-1572B6?style=for-the-badge&logo=intellij&logoColor=white"> 
+
+**API/라이브러리** 
+
+GoogleLogin API, KakaoMap API, Thymeleaf
 
 **CI/CD** Git, GitAction, CodeDeploy 
 
