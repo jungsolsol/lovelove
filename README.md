@@ -14,7 +14,10 @@
 
 <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/ubuntu-FCC624?style=for-the-badge&logo=ubuntu&logoColor=black">
 
-**프레임워크** SpringBoot , SpringJPA
+**프레임워크** 
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/springjpa-6DB33F?style=for-the-badge&logo=springjpat&logoColor=white"> 
+
+
 
 **DB** Mysql, AWS RDS
 
