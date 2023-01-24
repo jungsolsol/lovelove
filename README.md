@@ -30,11 +30,15 @@
 
 **API/라이브러리** 
 
-GoogleLogin API, KakaoMap API, Thymeleaf
+<img src="https://img.shields.io/badge/googlelogin api-DD0031?style=for-the-badge&logo=googlelogin api&logoColor=white"> <img src="https://img.shields.io/badge/kakaomap api-FFCA28?style=for-the-badge&logo=kakaomap api&logoColor=white"> <img src="https://img.shields.io/badge/thymeleaf-47A248?style=for-the-badge&logo=thymeleaf&logoColor=white"> 
 
-**CI/CD** Git, GitAction, CodeDeploy 
+**CI/CD** 
 
-**보안** SpringSecurity, SSL
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github action-F05032?style=for-the-badge&logo=github action&logoColor=white"> <img src="https://img.shields.io/badge/codedeploy-4053D6?style=for-the-badge&logo=codedeploy&logoColor=white"> 
+
+**보안** 
+
+<img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/ssl-000000?style=for-the-badge&logo=ssl&logoColor=white"> 
 
 ------------
 # 배포
