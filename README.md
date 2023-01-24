@@ -32,7 +32,9 @@
 ------------
 
 ## 구현 
+
 * 백엔드 구현
+
     * MVC패턴으로 서비스 구현 
     * OAuth2 + Spring Security로 회원가입, 로그인 기능 구현
     * 사용자 정보 CRUD , 매시지 CRUD, 하트 기능 구현
@@ -41,7 +43,9 @@
       * 하트가 눌려져있을때 , 눌려져있지않을때로 상황을 나누어서 하트를 제거, 추가하는 로직
       * 이성 탐색하는 반경을 조정하는 로직
     * JPQL로 필요한 쿼리 구현
+
 * 프론트엔드 구현
+
     * Vanllia JS + Kakao API (MAP) + geolocation API (현재 위도 경도) + ajax로 백엔드서버와 통신 구현 
     * Thymeleaf로 SSR view 구현 
     * CSS3로 간단한 디자인 구현
