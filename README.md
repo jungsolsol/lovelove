@@ -32,5 +32,11 @@
 ------------
 
 ## 구현 
-* 백엔드
-     * MVC패턴으로 구현
+* 백엔드 구현
+    * MVC패턴으로 서비스 구현 
+    * OAuth2 인증으로 로그인 구현
+    * JPQL로 필요한 쿼리 구현
+* 프론트엔드 구현
+    * Vanllia JS + Kakao API (MAP) + geolocation API (현재 위도 경도) + ajax로 백엔드서버와 통신 구현 
+    * Thymeleaf로 SSR view 구현 
+    * CSS3로 간단한 디자인 구현
