@@ -6,7 +6,12 @@
 
 ## 개발 환경
 
-**언어** Java(JDK 11), HTML/CSS, Javascript
+**언어** 
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=css&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=javascript&logoColor=white">
+Java(JDK 11), HTML/CSS, Javascript
 
 **서버** Apache Tomcat , AWS EC2, ubuntu
 
@@ -53,4 +58,8 @@
     * Thymeleaf로 SSR view 구현 
     * CSS3로 간단한 디자인 구현
 
+------------
+# 화면구성 
+
+### 시작 페이지
 
