@@ -44,7 +44,7 @@
 # 배포
 
 ### 배포환경 AWS (비용문제로 배포중지)
-#### ~ www.jungsolsol.com ~
+#### ~www.jungsolsol.com~
 
 ## 프로젝트 아키텍쳐
 ![image](https://user-images.githubusercontent.com/88434960/206699983-5a77f4b5-07bc-42c2-971e-5bec5ac5ab13.png)
