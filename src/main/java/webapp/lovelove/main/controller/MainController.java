@@ -5,6 +5,7 @@ import net.minidev.json.JSONObject;
 import org.apache.coyote.Request;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,6 +15,7 @@ import webapp.lovelove.auth.PrincipalDetails;
 import webapp.lovelove.main.domain.findMemberDto;
 import webapp.lovelove.main.dto.MessageDto;
 import webapp.lovelove.main.dto.MessageUpdateDto;
+import webapp.lovelove.main.dto.PageResponseDto;
 import webapp.lovelove.main.repository.HeartRepository;
 import webapp.lovelove.main.service.MessageService;
 import webapp.lovelove.member.domain.Heart;
@@ -40,11 +42,13 @@ public class MainController {
 
 
         model.addAttribute("member", principalDetails.getAttribute("name"));
-
-        String email = (String) principalDetails.getAttribute("email");
-        Member byEmail = memberRepository.findByEmail(email);
-        model.addAttribute("distance", byEmail.getDistance());
-        model.addAttribute("nick", byEmail.getMemberProfile().getNickname());
+        String email = principalDetails.getAttribute("email");
+        PageResponseDto dto = memberService.getMap(email);
+        model.addAttribute("distance", dto.getDistance());
+        model.addAttribute("nick", dto.getNickname());
+//        Member byEmail = memberRepository.findByEmail(email);
+//        model.addAttribute("distance", byEmail.getDistance());
+//        model.addAttribute("nick", byEmail.getMemberProfile().getNickname());
     }
 
     @PostMapping("love/main")

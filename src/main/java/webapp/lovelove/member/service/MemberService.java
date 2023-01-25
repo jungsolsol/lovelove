@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import webapp.lovelove.auth.PrincipalDetails;
 import webapp.lovelove.main.domain.Message;
 import webapp.lovelove.main.domain.findMemberDto;
+import webapp.lovelove.main.dto.PageResponseDto;
 import webapp.lovelove.main.dto.ProfileDto;
 import webapp.lovelove.main.repository.HeartRepository;
 import webapp.lovelove.main.repository.MessageRepository;
@@ -319,7 +320,12 @@ public class MemberService {
 
 
 
-
     }
 
+
+    @Transactional
+    public PageResponseDto getMap(String email) {
+        Member member = memberRepository.findByEmail(email);
+        return new PageResponseDto(member);
+    }
 }
