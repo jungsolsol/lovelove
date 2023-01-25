@@ -75,15 +75,24 @@
 ------------
 # 화면구성 
 
-### 시작 페이지
+### 회원가입 
+
+![1-Oauth로그인](https://user-images.githubusercontent.com/88434960/214580708-3716b674-5db2-4970-9a72-82172e43bef2.gif)
+
 
 
 ### 프로필 작성 
 1. 프로필 작성
 
-
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/88434960/214581993-88f4f132-c2a0-4fd2-9e6a-2e033074ae05.gif)
 
 
 2. 유효성 검사
 
 ![유효성-검사](https://user-images.githubusercontent.com/88434960/214579488-405999c2-01c6-4937-bb38-dd34d24d866f.gif)
+
+
+### 하트 보내기
+
+![하트-보내기](https://user-images.githubusercontent.com/88434960/214580974-52fb4d51-8ee6-43d8-a40b-50d8511a011e.gif)
+
