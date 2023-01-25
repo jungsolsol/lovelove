@@ -25,12 +25,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository{
 
     @Override
     public List<Member> findNearByMemberPostion(String pointFormat) {
-        Query nativeQuery = em.createNativeQuery("SELECT * FROM member as m WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", m.member_point)", Member.class);
+        Query nativeQuery = em.createNativeQuery
+                ("SELECT * FROM member as m WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", m.member_point)", Member.class);
         List<Member> resultList = nativeQuery.getResultList();
-
-//        List<findMemberDto> findMemberDtoList = query.getResultList();
-
-
 
         return resultList;
     }

@@ -115,7 +115,8 @@
                     /**
                      * 좋아요 눌러놓은 사람은 꽉찬 하트로 화면에 표시
                      */
-                    for (var i = 0; i < d.heart.length; i ++) {
+                    if (!d.heart.length) {
+                        for (var i = 0; i < d.heart.length; i ++) {
                         if (d.heart.includes(d.nickname[i])) {
 
                             sessionStorage.setItem(d.nickname[i], "fill");
@@ -125,7 +126,9 @@
                             sessionStorage.setItem(d.nickname[i], "empty");
 
                         }
-                    }
+                    }}
+
+
 
                     console.log(sessionStorage)
                     for (var i = 0; i < d.name.length; i++) {

@@ -25,6 +25,9 @@ import java.util.List;
 //@Component
 @AllArgsConstructor
 @Service
+/**
+ * 로컬환경에서 로컬에 파일저장 서비스
+ */
 public class FileHandler {
 
     private final ImagesRepository imagesRepository;
