@@ -37,10 +37,8 @@
        onclick="alert('회원탈퇴가 완료되었습니다')"
        style="color: grey; text-decoration: none; font-size: large">회원탈퇴</a>
 </div>
-<!--    <div>-->
-<!--&lt;!&ndash;    <a th:class="toggleBtn"><i class="fa-solid fa-bars"></i></a>&ndash;&gt;-->
-<!--    </div>-->
-    <img src="https://www.jungsolsol.com/images/init/background.png" style="width: 100%" height="620">
+    <img id= "backgroundImage" th:src="@{/images/init/background.png}" style="width: 100%" height="620">
+<!--    <img src="https://www.jungsolsol.com/images/init/background.png" style="width: 100%" height="620">-->
 </body>
 <footer>
     <div th:replace="fragments/footer :: footer" />
