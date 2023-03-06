@@ -13,11 +13,12 @@
 <body style="text-align: center">
 
 <div class="container">
-    <h1>럽플</h1>
-    <p class="lead"></p>
-    <h3 style="text-align: center" >
-        나와 같은 공간에있는 이성에게 호감을 표현하세요
-    </h3>
+    <img id="logo" th:src="@{/images/LovePlace.png}" style="width: 15%">
+<!--    <h1>럽플</h1>-->
+<!--    <p class="lead"></p>-->
+<!--    <h3 style="text-align: center" >-->
+<!--        나와 같은 공간에있는 이성에게 호감을 표현하세요-->
+<!--    </h3>-->
     <div class="login-container" style="text-align: left">
 <!--        <a th:text="환영합니다" style="text-align: left"></a>-->
         <a class="login" th:if="${not #strings.isEmpty(member)}"  href="/logout" role="button"

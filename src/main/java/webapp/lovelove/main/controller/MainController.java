@@ -59,6 +59,8 @@ public class MainController {
         try {
             Double lattoDouble = Double.parseDouble(lat);
             Double lontoDouble = Double.parseDouble(lon);
+            System.out.println(lat);
+            System.out.println(lon);
             memberService.setMemberPosition(lattoDouble, lontoDouble, principalDetails);
             //distance에 따른 탐색 거리 조정
 
@@ -67,7 +69,6 @@ public class MainController {
             throw new IOException("Error");
         }
         finally {
-
             String email = (String) principalDetails.getAttribute("email");
             Member byEmail = memberRepository.findByEmail(email);
             MemberPosition memberPosition = byEmail.getMemberPosition();
